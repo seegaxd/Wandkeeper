@@ -1,0 +1,38 @@
+using UnityEngine;
+
+public abstract class Artefact : MonoBehaviour, InfoItem
+{
+    [SerializeField] private Rarity rarity;
+    [SerializeField] private ContentType CT;
+    [SerializeField] private int id;
+    [SerializeField] private Pool pool;
+    [SerializeField] private string thisName;
+    [SerializeField] private Sprite thisImage;
+    [SerializeField] private int thisLevel;
+    public int level => thisLevel;
+    public Sprite thisItemImage => thisImage;
+    public string thisItemName => thisName;
+    public Pool thisPool => pool;
+
+    public int ID => id;
+    public ContentType thisType => CT;
+    public Rarity thisRarity => rarity;
+    void Awake()
+    {
+        thisImage = GetComponent<SpriteRenderer>().sprite;
+    }
+    public void OnEquip()
+    {
+        ActivateEffect();
+        ArtefactsManager.Instance.equipedArtefacts.Add(this);
+    }
+    public abstract void ActivateEffect();
+    public abstract void DeactivateEffect();
+
+    void OnDestroy()
+    {
+        ArtefactsManager.Instance.equipedArtefacts.Remove(this);
+        DeactivateEffect();
+    }
+
+}
