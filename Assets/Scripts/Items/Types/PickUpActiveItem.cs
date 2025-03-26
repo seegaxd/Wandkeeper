@@ -12,6 +12,21 @@ public class PickUpActiveItem : Item
     }
     public override void PickUpItem(bool isLong)
     {
+        if(isLong)
+        {
+            InventoryManager inventory = InventoryManager.Instance;
+            if(inventory.itemsSlots.Count < inventory.maxSlots)
+            {   
+                TurningOffSprite();
+                thisItem.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, 0);
+                inventory.TakeItem(thisItem);
+            }
+            else
+            {
+                GetComponent<PickUpItem>().ActivatePickupable();
+            }
+            return;
+        }
         if(PM.AItem != null) 
         {
             PM.AItem.transform.SetParent(null);
@@ -23,8 +38,12 @@ public class PickUpActiveItem : Item
         PM.AItem.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, 0);
         GM.activeButtons[5].sprite = PM.AItem.GetComponent<SpriteRenderer>().sprite;
         GM.savedImages[5] = PM.AItem.GetComponent<SpriteRenderer>().sprite;
+        TurningOffSprite();
+        InventoryManager.Instance.InitializeInventory();
+    }
+    public void TurningOffSprite()
+    {
         transform.SetParent(PM.transform);
         transform.localPosition = Vector2.zero;
-        //Destroy(GetComponent<PickUpActiveItem>());
     }
 }

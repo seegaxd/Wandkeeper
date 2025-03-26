@@ -12,8 +12,20 @@ public class PickUpArtefact : Item
     }
     public override void PickUpItem(bool isLong)
     {
-        ArtefactsManager.Instance.equipedArtefacts.Add(thisArt);
-        thisArt.ActivateEffect();
-        Destroy(gameObject);
+        InventoryManager inventory = InventoryManager.Instance;
+        if(inventory.itemsSlots.Count < inventory.maxSlots)
+        {
+            ArtefactsManager.Instance.equipedArtefacts.Add(thisArt);
+            thisArt.ActivateEffect();
+            InventoryManager.Instance.TakeItem(thisArt);
+            thisArt.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
+            transform.SetParent(PM.transform);
+            transform.localPosition = Vector2.zero;
+        }
+        else
+        {
+            GetComponent<PickUpItem>().ActivatePickupable();
+        }
+        return;
     }
 }

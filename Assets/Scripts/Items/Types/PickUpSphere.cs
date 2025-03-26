@@ -8,7 +8,20 @@ public class PickUpSphere : Item
         
         if (isLong)
         {
-            InventoryManager.Instance.TakeItem(sphere);
+            InventoryManager inventory = InventoryManager.Instance;
+            if(inventory.itemsSlots.Count < inventory.maxSlots)
+            {
+                InventoryManager.Instance.TakeItem(sphere);
+                sphere.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, 0);
+                transform.SetParent(PM.transform);
+                transform.localPosition = Vector2.zero;
+                return;
+            }
+            else
+            {
+                GetComponent<PickUpItem>().ActivatePickupable();
+                return;
+            }
         }
         
         if (PM.primarySphere == null)
@@ -21,7 +34,7 @@ public class PickUpSphere : Item
         }
         else
         {
-            InventoryManager.Instance.TakeItem(sphere);
+            ChangeSphere(sphere, true);
         }
         
         transform.SetParent(PM.transform);

@@ -34,6 +34,7 @@ public class PickUpAbility : Item
 
         transform.SetParent(PM.transform);
         transform.localPosition = Vector2.zero;
+        InventoryManager.Instance.InitializeInventory();
     }
 
     private ref Ability GetAbilityRef(AbilityType type)
