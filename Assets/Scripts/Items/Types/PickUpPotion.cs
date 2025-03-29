@@ -17,7 +17,7 @@ public class PickUpPotion : Item
         InventoryManager inventory = InventoryManager.Instance;
         if(isLong)
         {
-            if(inventory.itemsSlots.Count < inventory.maxSlots)
+            if(inventory.itemsIn.Count < inventory.maxSlots)
             {
                 TakePotionToInventory();
             }
@@ -37,6 +37,16 @@ public class PickUpPotion : Item
         {
             GetComponent<PickUpItem>().ActivatePickupable();
         }
+    }
+    public override void DropDownItem()
+    {
+        SpriteRenderer tempSpite = GetComponent<SpriteRenderer>();
+        tempSpite.color = Color.white;
+        GetComponent<PickUpItem>().ActivatePickupable();
+        transform.SetParent(null);
+        Potion tempPotion = GetComponent<Potion>();
+        if(PM.zPotion == tempPotion) PM.zPotion = null;
+        else if(PM.xPotion == tempPotion) PM.xPotion = null;
     }
     private void TakePotionToInventory()
     {

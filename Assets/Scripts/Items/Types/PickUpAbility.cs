@@ -36,7 +36,17 @@ public class PickUpAbility : Item
         transform.localPosition = Vector2.zero;
         InventoryManager.Instance.InitializeInventory();
     }
-
+    public override void DropDownItem()
+    {
+        SpriteRenderer tempSpite = GetComponent<SpriteRenderer>();
+        tempSpite.color = Color.white;
+        GetComponent<PickUpItem>().ActivatePickupable();
+        transform.SetParent(null);
+        Ability tempAbility = GetComponent<Ability>();
+        if(tempAbility == PM.qAbility) PM.qAbility = null;
+        else if(tempAbility == PM.eAbility) PM.eAbility = null;
+        else if(tempAbility == PM.rAbility) PM.rAbility = null;
+    }
     private ref Ability GetAbilityRef(AbilityType type)
     {
         switch (type)

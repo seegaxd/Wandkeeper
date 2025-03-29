@@ -29,4 +29,8 @@ public class PickUpPickups : Item
         }
         Destroy(gameObject);
     }
+    public override void DropDownItem()
+    {
+        Debug.Log("How is this possible? CODE:01");
+    }
 }

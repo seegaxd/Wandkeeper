@@ -15,7 +15,7 @@ public class PickUpActiveItem : Item
         if(isLong)
         {
             InventoryManager inventory = InventoryManager.Instance;
-            if(inventory.itemsSlots.Count < inventory.maxSlots)
+            if(inventory.itemsIn.Count < inventory.maxSlots)
             {   
                 TurningOffSprite();
                 thisItem.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, 0);
@@ -40,6 +40,15 @@ public class PickUpActiveItem : Item
         GM.savedImages[5] = PM.AItem.GetComponent<SpriteRenderer>().sprite;
         TurningOffSprite();
         InventoryManager.Instance.InitializeInventory();
+    }
+    public override void DropDownItem()
+    {
+        SpriteRenderer tempSpite = GetComponent<SpriteRenderer>();
+        tempSpite.color = Color.white;
+        GetComponent<PickUpItem>().ActivatePickupable();
+        transform.SetParent(null);
+        ActiveItem tempItem = GetComponent<ActiveItem>();
+        if(PM.AItem == tempItem) PM.AItem = null;
     }
     public void TurningOffSprite()
     {

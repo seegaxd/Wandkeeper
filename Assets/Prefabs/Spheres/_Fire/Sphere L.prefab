@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bounceCount: 0
+  thisElementType: 0
   damage: 2
   baseCd: 2
   finalCd: 2
@@ -137,4 +138,8 @@ MonoBehaviour:
   pool: 0
   thisName: Sphere of Lightning
   thisImage: {fileID: 21300000, guid: 5facc39b79d7de747877c1fa36f6d0d1, type: 3}
+  thisLevel: 0
+  thisGameObject: {fileID: 9220558241297591393}
+  thisDescriptionIn: Strike a random enemy on a screen
+  thisElementTypeIn: 0
   lightningPrefab: {fileID: 6331641530127777408, guid: 5312b3476a328de48b9be54017017b93, type: 3}

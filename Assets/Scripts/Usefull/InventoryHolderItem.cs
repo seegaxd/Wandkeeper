@@ -2,7 +2,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
 
-public class InentoryHolderItem : MonoBehaviour
+public class InventoryHolderItem : MonoBehaviour
 {
     public InfoItem thisItem;
     public Image thisImage;
@@ -16,6 +16,6 @@ public class InentoryHolderItem : MonoBehaviour
     public void OpenInfoMenu()
     {
         Debug.Log("Item: " + thisItem);
-        InventoryUI.Instance.OpenInfoMenu(thisItem);
+        InventoryUI.Instance.OpenInfoMenu(thisItem, false);
     }
 }

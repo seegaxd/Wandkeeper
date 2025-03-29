@@ -11,4 +11,8 @@ public class EnterPortal : Item
     {
         portal.TeleportTo();
     }
+    public override void DropDownItem()
+    {
+        Debug.Log("How is this possible? CODE:0");
+    }
 }

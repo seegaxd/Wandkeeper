@@ -15,7 +15,7 @@ public class InventoryManager : MonoBehaviour
     private PlayerMechanic PM;
     public GameObject itemPrefab;
     public Transform parentInventory;
-    public List<InentoryHolderItem> itemsSlots = new List<InentoryHolderItem>(); 
+    public List<InventoryHolderItem> itemsSlots = new List<InventoryHolderItem>(); 
     void Awake()
     {
         if(Instance == null)
@@ -69,14 +69,38 @@ public class InventoryManager : MonoBehaviour
             EquipItem(7, PM.rAbility);
         }
     }
-    private void EquipItem(int ImageIndex, InfoItem item)
+    public void EquipItem(int ImageIndex, InfoItem item)
     {
         itemsOn.Add(item);
         imagesInventory[ImageIndex].sprite = item.thisItemImage;
+        Button tempButton = imagesInventory[ImageIndex].transform.parent.GetComponent<Button>();
+        tempButton.interactable = true;
+        tempButton.onClick.RemoveAllListeners();
+        tempButton.onClick.AddListener(() => InventoryUI.Instance.OpenInfoMenu(item, true));
+        InventoryUI.Instance.InputAmountOfSlots();
+    }
+    public void UnEquipItem(int ImageIndex, InfoItem item)
+    {
+        itemsOn.Remove(item);
+        imagesInventory[ImageIndex].sprite = null;
+        Button tempButton = imagesInventory[ImageIndex].GetComponentInParent<Button>();
+        tempButton.onClick.RemoveAllListeners();
+        tempButton.interactable = false;
+        TakeItem(item);
+        InventoryUI.Instance.InputAmountOfSlots();
+    }
+    public void OnDropUIItem(int ImageIndex, InfoItem item)
+    {
+        itemsOn.Remove(item);
+        imagesInventory[ImageIndex].sprite = null;
+        Button tempButton = imagesInventory[ImageIndex].GetComponentInParent<Button>();
+        tempButton.onClick.RemoveAllListeners();
+        tempButton.interactable = false;
     }
     public void TakeItem(InfoItem item)
     {
         itemsIn.Add(item);
+        InventoryUI.Instance.InputAmountOfSlots();
         GenerateItems();
     }
     public void GenerateItems()
@@ -90,15 +114,56 @@ public class InventoryManager : MonoBehaviour
             itemsSlots[i].gameObject.SetActive(true);
             itemsSlots[i].InitializeInfoItem(itemsIn[i]);
         }
+        InventoryUI.Instance.InputAmountOfSlots();
     }
     public void InstantiateSlots()
     {
         for(int i = 0; i < maxSlots; i++)
         {
             GameObject tempObj = Instantiate(itemPrefab, parentInventory);
-            itemsSlots.Add(tempObj.GetComponent<InentoryHolderItem>());
+            itemsSlots.Add(tempObj.GetComponent<InventoryHolderItem>());
             tempObj.SetActive(false);
-            
+        }
+    }
+    public void UnEquipItem(InfoItem item)
+    {
+        GameManager GM = GameManager.Instance;
+        switch(item.thisType)
+        {
+            case ContentType.Sphere :
+                if(PM.primarySphere?.GetComponent<InfoItem>() == item)
+                {
+                    PM.primarySphere.PickedOut();
+                    PM.primarySphere = null;
+                    UnEquipItem(0, item);
+                }
+                else
+                {
+                    PM.secondarySphere.PickedOut();
+                    PM.secondarySphere = null;
+                    UnEquipItem(1, item);
+                }
+                break;
+            case ContentType.Potion :
+                if(PM.zPotion?.GetComponent<InfoItem>() == item)
+                {
+                    PM.zPotion = null;
+                    UnEquipItem(2, item);
+                    GM.activeButtons[3].sprite = GM.baseImages[1];
+                }
+                else
+                {
+                    PM.xPotion = null;
+                    UnEquipItem(3, item);
+                    GM.activeButtons[4].sprite = GM.baseImages[1];
+                }
+                break;
+            case ContentType.ActiveItem :
+                PM.AItem = null;
+                UnEquipItem(4, item);
+                GM.activeButtons[5].sprite = GM.baseImages[2];
+                break;
+                default : break;
         }
     }
 }

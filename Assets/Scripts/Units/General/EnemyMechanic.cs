@@ -4,6 +4,7 @@ public class EnemyMechanic : MonoBehaviour
 {
     public float hp;
     public float maxHp;
+    public float AttackDistance = 2f; // Враги останавливаются в этой зоне
     void Start()
     {
         hp = maxHp;

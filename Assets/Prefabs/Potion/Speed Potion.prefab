@@ -132,4 +132,9 @@ MonoBehaviour:
   pool: 0
   thisName: Speed Potion
   thisImage: {fileID: 21300000, guid: 58bffc0f2c791b64db5a8069cc3d5b57, type: 3}
+  thisLevel: 0
+  thisGameObject: {fileID: 4096927907154669043}
+  thisDescriptionIn: when you trink this potion, you become more speedy boy
+  thisElementTypeIn: 1
+  thisSlot: 0
   duration: 2

@@ -17,4 +17,8 @@ public class PickUpDialoge : Item, IObserver
     {
         VisualNovellManager.Instance.StartDialog(DialogType.Merchant, 0);
     }
+    public override void DropDownItem()
+    {
+        Debug.Log("How is this possible? CODE:00");
+    }
 }

@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bounceCount: 0
+  thisElementType: 0
   damage: 2
   baseCd: 2
   finalCd: 2
@@ -85,6 +86,10 @@ MonoBehaviour:
   pool: 0
   thisName: Sphere Of Fire
   thisImage: {fileID: 21300000, guid: f74978fe025640c488c80442dca201c7, type: 3}
+  thisLevel: 0
+  thisGameObject: {fileID: 5169903846740857084}
+  thisDescriptionIn: basic sphere, that provides you to shooit in closest enemy
+  thisElementTypeIn: 0
   fireballPrefab: {fileID: 6450606309962927331, guid: 25538e236aaacc84482f22f2de02550a, type: 3}
 --- !u!212 &621665256409906887
 SpriteRenderer:

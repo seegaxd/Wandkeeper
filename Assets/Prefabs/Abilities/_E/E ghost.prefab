@@ -131,6 +131,7 @@ MonoBehaviour:
   CDbase: 5
   CDfinal: 5
   thisAbilityType: 1
+  GM: {fileID: 0}
   PS: {fileID: 0}
   PM: {fileID: 0}
   rarity: 2
@@ -139,3 +140,7 @@ MonoBehaviour:
   pool: 0
   thisName: Ghost
   thisImage: {fileID: 21300000, guid: 72dea2636570e3647980980fbff88135, type: 3}
+  thisLevel: 0
+  thisGameObject: {fileID: 2170295800345535338}
+  thisDescriptionIn: make you ghost and gives you a tonn of move speed
+  thisElementTypeIn: 0

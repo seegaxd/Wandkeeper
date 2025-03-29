@@ -19,6 +19,12 @@ public abstract class ActiveItem : MonoBehaviour, InfoItem
     [SerializeField] private string thisName;
     [SerializeField] private Sprite thisImage;
     [SerializeField] private int thisLevel;
+    [SerializeField] private GameObject thisGameObject;
+    [SerializeField] private string thisDescriptionIn;
+    [SerializeField] private ElementType thisElementTypeIn;
+    public ElementType thisElementTypeInfo => thisElementTypeIn;
+    public string thisDescriptionInfo => thisDescriptionIn;
+    public GameObject thisGameObjectInfo => thisGameObject;
     public int level => thisLevel;
     public Sprite thisItemImage => thisImage;
     public string thisItemName => thisName;

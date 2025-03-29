@@ -131,6 +131,7 @@ MonoBehaviour:
   CDbase: 5
   CDfinal: 5
   thisAbilityType: 1
+  GM: {fileID: 0}
   PS: {fileID: 0}
   PM: {fileID: 0}
   rarity: 0
@@ -139,3 +140,7 @@ MonoBehaviour:
   pool: 0
   thisName: Dash
   thisImage: {fileID: 21300000, guid: 9e41958b2b684244b817f0035b0e4d9a, type: 3}
+  thisLevel: 0
+  thisGameObject: {fileID: 6022860728288710803}
+  thisDescriptionIn: Just a casual dash in a front of your movement
+  thisElementTypeIn: 3

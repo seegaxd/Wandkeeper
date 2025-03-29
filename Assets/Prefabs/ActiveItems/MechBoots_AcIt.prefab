@@ -104,12 +104,18 @@ MonoBehaviour:
   duration: 2
   isCanActivating: 1
   PS: {fileID: 0}
+  GM: {fileID: 0}
+  PM: {fileID: 0}
   rarity: 0
   CT: 2
   id: 4
   pool: 0
   thisName: Mechanical Boots
   thisImage: {fileID: 21300000, guid: 809bad864648a2d46ac322d3c8b777ec, type: 3}
+  thisLevel: 0
+  thisGameObject: {fileID: 7180818770966538656}
+  thisDescriptionIn: give you a move speed
+  thisElementTypeIn: 2
 --- !u!114 &7335704226018433184
 MonoBehaviour:
   m_ObjectHideFlags: 0

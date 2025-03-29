@@ -13,7 +13,7 @@ public class PickUpArtefact : Item
     public override void PickUpItem(bool isLong)
     {
         InventoryManager inventory = InventoryManager.Instance;
-        if(inventory.itemsSlots.Count < inventory.maxSlots)
+        if(inventory.itemsIn.Count < inventory.maxSlots)
         {
             ArtefactsManager.Instance.equipedArtefacts.Add(thisArt);
             thisArt.ActivateEffect();
@@ -27,5 +27,14 @@ public class PickUpArtefact : Item
             GetComponent<PickUpItem>().ActivatePickupable();
         }
         return;
+    }
+    public override void DropDownItem()
+    {
+        SpriteRenderer tempSpite = GetComponent<SpriteRenderer>();
+        tempSpite.color = Color.white;
+        GetComponent<PickUpItem>().ActivatePickupable();
+        transform.SetParent(null);
+        Artefact tempArtefact = GetComponent<Artefact>();
+        tempArtefact.DeactivateEffect();
     }
 }
