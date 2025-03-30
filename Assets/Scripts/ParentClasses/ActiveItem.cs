@@ -22,6 +22,12 @@ public abstract class ActiveItem : MonoBehaviour, InfoItem
     [SerializeField] private GameObject thisGameObject;
     [SerializeField] private string thisDescriptionIn;
     [SerializeField] private ElementType thisElementTypeIn;
+    [SerializeField] private Dictionary<ElementType, int> maximumNeeded;
+    [SerializeField] private Dictionary<ElementType, int> nowNeeded;
+    [SerializeField] private int maximumLevel;
+    public int thisMaximumLevel => maximumLevel;
+    public Dictionary<ElementType, int> thisNextLevelNeeded => nowNeeded;
+    public Dictionary<ElementType, int> thisMaximumNeeded => maximumNeeded;
     public ElementType thisElementTypeInfo => thisElementTypeIn;
     public string thisDescriptionInfo => thisDescriptionIn;
     public GameObject thisGameObjectInfo => thisGameObject;

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -9200374206309936685}
   m_Layer: 0
   m_Name: FireBall
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbe4899c14384734792e4751d0a28de9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSecondaryAlready: 0
   target: {fileID: 0}
   speed: 2
   isPrimary: 1

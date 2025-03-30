@@ -22,6 +22,7 @@ public class EnemyMovement : MonoBehaviour
     private Vector2 lastTargetPosition;
     public EnemyType enemyType;
     private float orbitAngle;
+    public bool isDodgeProjectiles;
 
     void Start()
     {
@@ -103,6 +104,10 @@ public class EnemyMovement : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 1f);
         if (hit.collider != null)
         {
+            if(hit.collider.CompareTag("Projectile") && !isDodgeProjectiles)
+            {
+                return Vector2.zero;
+            }
             Vector2 left = Vector2.Perpendicular(direction);
             Vector2 right = -left;
 
@@ -121,7 +126,7 @@ public class EnemyMovement : MonoBehaviour
         Vector2 avoidance = Vector2.zero;
         foreach (Collider2D neighbor in neighbors)
         {
-            if (neighbor.gameObject != gameObject)
+            if (neighbor.gameObject != gameObject && !neighbor.CompareTag("Projectile") || (neighbor.CompareTag("Projectile") && isDodgeProjectiles))
             {
                 Vector2 away = transform.position - neighbor.transform.position;
                 avoidance += away.normalized;

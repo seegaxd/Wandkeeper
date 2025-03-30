@@ -24,6 +24,7 @@ public class InventoryUI : MonoBehaviour
         if(Instance == null)
         {
             Instance = this;
+            gameObject.SetActive(false);
         }
         else
         {
@@ -38,7 +39,9 @@ public class InventoryUI : MonoBehaviour
     }
     public void InputAmountOfSlots()
     {
+        if(IM.itemsIn.Count > 0)
         slotsAmount.text = $"{IM.itemsIn.Count}/{IM.maxSlots}";
+        else slotsAmount.text = $"0/{IM.maxSlots}";
     }
     public void OpenInfoMenu(InfoItem item, bool isEquiped)
     {

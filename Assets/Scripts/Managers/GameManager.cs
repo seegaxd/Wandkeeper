@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     [Tooltip("0 - Ability, 1 - Potion, 2 - ActiveItem")]
     public Sprite[] baseImages;
     public Sprite[] savedImages = new Sprite[6];
+    public Image expBar;
     /////////////////////////
     void Awake()
     {

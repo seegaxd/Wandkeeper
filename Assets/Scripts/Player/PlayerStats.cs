@@ -4,6 +4,9 @@ using System;
 
 public class PlayerStats : MonoBehaviour
 {
+    // crystalls
+    public Dictionary<ElementType, int> amountOfCrystalls;
+    public Dictionary<ElementType, int> amountOfCrystallsAdded;
     // damages
     public float BaseDamageMulty;
     public float AdditionalDamageMulty;
@@ -35,9 +38,13 @@ public class PlayerStats : MonoBehaviour
     ///////////////////////////////////
     
     // SphereStats
-    public float projectileSpeed = 1;
+    public float projectileSpeed = 5;
     ///////////////////////////////////
-    
+    //exp
+    public float needExp;
+    public float nowExp;
+    public float multyExp;
+    public float difficultMultyExp;
     /// Move speed
     public float moveSpeedBase;
     private float moveSpeedAdded_;
@@ -118,6 +125,27 @@ public class PlayerStats : MonoBehaviour
         voidCrystall -= amount;
         OM.NotifyAll(ObserverType.MoneyLA, amount);
 
+    }
+    public void TakeExp(float amount)
+    {
+        GameManager GM = GameManager.Instance;
+        float takenExp = amount;
+        do{
+            if(takenExp>=needExp-nowExp)
+            {
+                takenExp-= (needExp-nowExp);
+                LevelUp();
+            }
+            else
+            {
+                nowExp+=takenExp;
+            }
+        }while(takenExp>=needExp);
+    }
+    public void LevelUp()
+    {
+        needExp*=difficultMultyExp;
+        LevelUpUI.Instance.pointsLeft+=2;
     }
     public void ReCalculateAllTypes()
     {

@@ -13,7 +13,15 @@ public class LightningsSphere : Sphere
     {
         //
     }
-
+    public override void InitializeMaximumNeeded()
+    {
+        maximumLevel = 50;
+        thisMaximumNeeded[ElementType.Fire] = 40;
+        thisMaximumNeeded[ElementType.Earth] = 0;
+        thisMaximumNeeded[ElementType.Wind] = 5;
+        thisMaximumNeeded[ElementType.Water] = 0;
+        thisMaximumNeeded[ElementType.UmElementary] = 5;
+    }
     public override void PrimaryAttack()
     {
         Transform target = GetRandomEnemyInRadius(transform, 5f);

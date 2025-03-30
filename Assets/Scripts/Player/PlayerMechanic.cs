@@ -82,11 +82,7 @@ public class PlayerMechanic : MonoBehaviour, IObserver
         }
         if(Input.GetMouseButtonDown(0))
         {
-            if(primarySphere!=null)primarySphere.ActiveEffect();
-        }
-        if(Input.GetKeyDown(KeyCode.Tab))
-        {
-
+            primarySphere?.ActiveEffect();
         }
         }
     }
