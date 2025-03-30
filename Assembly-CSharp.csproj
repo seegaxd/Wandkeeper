@@ -106,6 +106,7 @@
     <Compile Include="Assets\Scripts\Items\ActiveItems\MechanicalBoots_AcIt.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\Managers\CheatMenu.cs" />
+    <Compile Include="Assets\Scripts\Managers\LevelManager.cs" />
     <Compile Include="Assets\Scripts\UI\InventoryUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Scripts\Managers\SaveLoadManager.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Assets\Scripts\Items\Potion\BuffPotions\SpeedPotion.cs" />
     <Compile Include="Assets\Scripts\ParentClasses\Portal.cs" />
     <Compile Include="Assets\Scripts\UI\CanvasFinder.cs" />
+    <Compile Include="Assets\Scripts\Map\ZoneMap.cs" />
     <Compile Include="Assets\Scripts\UI\HealthUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />

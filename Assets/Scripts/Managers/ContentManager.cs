@@ -70,8 +70,6 @@ public class ContentManager : MonoBehaviour
     private Dictionary<int, ContentItem> contentItemById = new();
     private SavedData unlockedItems = new SavedData();
 
-    
-
     [Header("All Content")]
     public GameObject[] allContent;
     public List<ContentItem> allContentItems;
@@ -86,6 +84,7 @@ public class ContentManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
             InitializeContent();
+            Debug.Log("доделать левел менеджер, сделать скрипты для специальных врагов и т.д.");
         }
         else
         {
