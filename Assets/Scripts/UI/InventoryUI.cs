@@ -24,7 +24,7 @@ public class InventoryUI : MonoBehaviour
         if(Instance == null)
         {
             Instance = this;
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
         else
         {

@@ -77,6 +77,7 @@ public class InventoryManager : MonoBehaviour
         tempButton.interactable = true;
         tempButton.onClick.RemoveAllListeners();
         tempButton.onClick.AddListener(() => InventoryUI.Instance.OpenInfoMenu(item, true));
+        LevelUpUI.Instance.UpdateImages();
         InventoryUI.Instance.InputAmountOfSlots();
     }
     public void UnEquipItem(int ImageIndex, InfoItem item)
@@ -87,6 +88,7 @@ public class InventoryManager : MonoBehaviour
         tempButton.onClick.RemoveAllListeners();
         tempButton.interactable = false;
         TakeItem(item);
+        LevelUpUI.Instance.UpdateImages();
         InventoryUI.Instance.InputAmountOfSlots();
     }
     public void OnDropUIItem(int ImageIndex, InfoItem item)
@@ -95,6 +97,7 @@ public class InventoryManager : MonoBehaviour
         imagesInventory[ImageIndex].sprite = null;
         Button tempButton = imagesInventory[ImageIndex].GetComponentInParent<Button>();
         tempButton.onClick.RemoveAllListeners();
+        LevelUpUI.Instance.UpdateImages();
         tempButton.interactable = false;
     }
     public void TakeItem(InfoItem item)
@@ -165,5 +168,6 @@ public class InventoryManager : MonoBehaviour
                 break;
                 default : break;
         }
+        LevelUpUI.Instance.UpdateImages();
     }
 }

@@ -81,6 +81,20 @@ public class PlayerStats : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            amountOfCrystalls = new Dictionary<ElementType, int>{
+            { ElementType.Fire, 0 },
+            { ElementType.Water, 0},
+            { ElementType.Earth, 0},
+            { ElementType.Wind, 0},
+            { ElementType.UmElementary, 0},
+            };
+            amountOfCrystallsAdded = new Dictionary<ElementType, int>{
+            { ElementType.Fire, 0 },
+            { ElementType.Water, 0},
+            { ElementType.Earth, 0},
+            { ElementType.Wind, 0},
+            { ElementType.UmElementary, 0},
+            };
         }
         else
         {
@@ -90,7 +104,7 @@ public class PlayerStats : MonoBehaviour
     }
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha3)) TakeDamage();
+        if(Input.GetKeyDown(KeyCode.Alpha3)) LevelUp();
     }
     public void UseKey(int amount = 1)
     {

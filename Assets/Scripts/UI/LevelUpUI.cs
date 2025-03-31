@@ -16,8 +16,20 @@ public class LevelUpUI : MonoBehaviour
     [Tooltip("0 - choosedItem, 1 - e, 2 - r, 3- primarySphere, 4 - secondarySphere")]
     public Image[] imagesForActiveButtons;
     public Image choosenImage;
-    public Dictionary<ElementType, int> pointsBasedAdded;
-    public Dictionary<ElementType, int> pointsAdditionalAdded;
+    public Dictionary<ElementType, int> pointsBasedAdded = new Dictionary<ElementType, int>{
+        { ElementType.Fire, 0 },
+        { ElementType.Water, 0},
+        { ElementType.Earth, 0},
+        { ElementType.Wind, 0},
+        { ElementType.UmElementary, 0},
+    };
+    public Dictionary<ElementType, int> pointsAdditionalAdded = new Dictionary<ElementType, int>{
+        { ElementType.Fire, 0 },
+        { ElementType.Water, 0},
+        { ElementType.Earth, 0},
+        { ElementType.Wind, 0},
+        { ElementType.UmElementary, 0},
+    };
     private InfoItem choosenItem;
     public int pointsLeft;
     public TextMeshProUGUI avaiblePointsText;
@@ -31,7 +43,7 @@ public class LevelUpUI : MonoBehaviour
         else
         {
             Instance = this;
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
     }
     void Start()
@@ -39,6 +51,11 @@ public class LevelUpUI : MonoBehaviour
         PM = PlayerMechanic.Instance;
         pointsBasedAdded = PlayerStats.Instance.amountOfCrystalls;
         pointsAdditionalAdded = PlayerStats.Instance.amountOfCrystallsAdded;
+        UpdateAvaiblePoints();
+        UpdateImages();
+        //UpdateNeededPoints();
+        UpdateYourCrystallsNow();
+        //UpdateDifference();
     }
     public void UpdateImages()
     {
@@ -92,6 +109,7 @@ public class LevelUpUI : MonoBehaviour
         }
         choosenImage.sprite = choosenItem.thisItemImage;
         UpdateNeededPoints();
+        UpdateDifference();
     }
     public void UpdateAvaiblePoints()
     {
@@ -99,33 +117,53 @@ public class LevelUpUI : MonoBehaviour
     }
     public void UpdateDifference()
     {
-        for(int i = 0; i < crystallsDiffs.Length; i++)
+        if(choosenItem != null)
         {
-            int nummer = choosenItem.thisMaximumNeeded[RegonizeElemet(i)] - (pointsBasedAdded[RegonizeElemet(i)] + pointsAdditionalAdded[RegonizeElemet(i)]);
-            crystallsDiffs[i].text = nummer.ToString();
-            crystallsDiffs[i].color = IfEnough(nummer);
+            for(int i = 0; i < crystallsDiffs.Length; i++)
+            {
+                int nummer = choosenItem.thisNextLevelNeeded[RegonizeElemet(i)] - (pointsBasedAdded[RegonizeElemet(i)] + pointsAdditionalAdded[RegonizeElemet(i)]);
+                crystallsDiffs[i].text = nummer.ToString();
+                crystallsDiffs[i].color = IfEnough(nummer);
+            }
         }
     }
     public Color IfEnough(int number)
     {
-        if(number>=0) return Color.green;
-        else return Color.red;
+        if(number>0) return Color.red;
+        else return Color.green;
     }
     public void UpdateNeededPoints()
     {
-        crystallsYouNeed[0].text = choosenItem.thisNextLevelNeeded[ElementType.Fire].ToString();
-        crystallsYouNeed[1].text = choosenItem.thisNextLevelNeeded[ElementType.Wind].ToString();
-        crystallsYouNeed[2].text = choosenItem.thisNextLevelNeeded[ElementType.Earth].ToString();
-        crystallsYouNeed[3].text = choosenItem.thisNextLevelNeeded[ElementType.Water].ToString();
-        crystallsYouNeed[4].text = choosenItem.thisNextLevelNeeded[ElementType.UmElementary].ToString();
+        if(choosenItem != null)
+        {
+            crystallsYouNeed[0].text = choosenItem.thisNextLevelNeeded[ElementType.Fire].ToString();
+            crystallsYouNeed[1].text = choosenItem.thisNextLevelNeeded[ElementType.Wind].ToString();
+            crystallsYouNeed[2].text = choosenItem.thisNextLevelNeeded[ElementType.Earth].ToString();
+            crystallsYouNeed[3].text = choosenItem.thisNextLevelNeeded[ElementType.Water].ToString();
+            crystallsYouNeed[4].text = choosenItem.thisNextLevelNeeded[ElementType.UmElementary].ToString();
+        }
     }
     public void UpdateYourCrystallsNow()
     {
-        crystallsYouHave[0].text = $"{pointsBasedAdded[ElementType.Fire] + pointsAdditionalAdded[ElementType.Fire]}({pointsBasedAdded[ElementType.Fire]} + {pointsAdditionalAdded[ElementType.Fire]})";
-        crystallsYouHave[1].text = $"{pointsBasedAdded[ElementType.Wind] + pointsAdditionalAdded[ElementType.Wind]}({pointsBasedAdded[ElementType.Wind]} + {pointsAdditionalAdded[ElementType.Wind]})";
-        crystallsYouHave[2].text = $"{pointsBasedAdded[ElementType.Earth] + pointsAdditionalAdded[ElementType.Earth]}({pointsBasedAdded[ElementType.Earth]} + {pointsAdditionalAdded[ElementType.Earth]})";
-        crystallsYouHave[3].text = $"{pointsBasedAdded[ElementType.Water] + pointsAdditionalAdded[ElementType.Water]}({pointsBasedAdded[ElementType.Water]} + {pointsAdditionalAdded[ElementType.Water]})";
-        crystallsYouHave[4].text = $"{pointsBasedAdded[ElementType.UmElementary] + pointsAdditionalAdded[ElementType.UmElementary]}({pointsBasedAdded[ElementType.UmElementary]} + {pointsAdditionalAdded[ElementType.UmElementary]})";
+        if (crystallsYouHave == null || crystallsYouHave.Length < 5)
+        {
+            Debug.LogError("crystallsYouHave не инициализирован или содержит меньше 5 элементов.");
+            return;
+        }
+
+        for (int i = 0; i < crystallsYouHave.Length; i++)
+        {
+            if (crystallsYouHave[i] == null)
+            {
+                Debug.LogError($"crystallsYouHave[{i}] равен null.");
+                return;
+            }
+        }
+        crystallsYouHave[0].text = $"FireCrystall: {pointsBasedAdded[ElementType.Fire] + pointsAdditionalAdded[ElementType.Fire]}({pointsBasedAdded[ElementType.Fire]} + {pointsAdditionalAdded[ElementType.Fire]})";
+        crystallsYouHave[1].text = $"WindCrystall:{pointsBasedAdded[ElementType.Wind] + pointsAdditionalAdded[ElementType.Wind]}({pointsBasedAdded[ElementType.Wind]} + {pointsAdditionalAdded[ElementType.Wind]})";
+        crystallsYouHave[2].text = $"EarthCrystall: {pointsBasedAdded[ElementType.Earth] + pointsAdditionalAdded[ElementType.Earth]}({pointsBasedAdded[ElementType.Earth]} + {pointsAdditionalAdded[ElementType.Earth]})";
+        crystallsYouHave[3].text = $"WaterCrystall: {pointsBasedAdded[ElementType.Water] + pointsAdditionalAdded[ElementType.Water]}({pointsBasedAdded[ElementType.Water]} + {pointsAdditionalAdded[ElementType.Water]})";
+        crystallsYouHave[4].text = $"UnElementary: {pointsBasedAdded[ElementType.UmElementary] + pointsAdditionalAdded[ElementType.UmElementary]}({pointsBasedAdded[ElementType.UmElementary]} + {pointsAdditionalAdded[ElementType.UmElementary]})";
     }
     public void AddPoint(int type)
     {
@@ -133,8 +171,20 @@ public class LevelUpUI : MonoBehaviour
         {
             pointsLeft--;
             pointsBasedAdded[RegonizeElemet(type)]++;
-
+            CheckAllItems();
+            UpdateAvaiblePoints();
+            UpdateYourCrystallsNow();
+            UpdateDifference();
+            UpdateNeededPoints();
         }
+    }
+    public void CheckAllItems()
+    {
+        PM.qAbility?.CheckCrystalls();
+        PM.eAbility?.CheckCrystalls();
+        PM.rAbility?.CheckCrystalls();
+        PM.primarySphere?.CheckCrystalls();
+        PM.secondarySphere?.CheckCrystalls();
     }
     public bool IsEqual(InfoItem item)
     {

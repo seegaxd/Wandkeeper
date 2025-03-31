@@ -12,6 +12,7 @@ public enum ElementType{
 }
 public interface InfoItem
 {
+    public void CheckCrystalls();
     public int ID { get ;}
     public ContentType thisType { get;}
     public Rarity thisRarity {get ;}
@@ -51,8 +52,8 @@ public abstract class Sphere : MonoBehaviour, InfoItem
     [SerializeField] private GameObject thisGameObject;
     [SerializeField] private string thisDescriptionIn;
     [SerializeField] private ElementType thisElementTypeIn;
-    [SerializeField] public Dictionary<ElementType, int> maximumNeeded;
-    [SerializeField] public Dictionary<ElementType, int> nowNeeded;
+    [SerializeField] public Dictionary<ElementType, int> maximumNeeded = new Dictionary<ElementType, int>();
+    [SerializeField] public Dictionary<ElementType, int> nowNeeded = new Dictionary<ElementType, int>();
     [SerializeField] public int maximumLevel;
     public int thisMaximumLevel => maximumLevel;
     public Dictionary<ElementType, int> thisNextLevelNeeded => nowNeeded;
@@ -76,17 +77,37 @@ public abstract class Sphere : MonoBehaviour, InfoItem
         this.player = player;
         this.isPrimary = isPrimary;
     }
+    public void CheckCrystalls()
+    {
+        PlayerStats PS = PlayerStats.Instance;
+        foreach (ElementType element in Enum.GetValues(typeof(ElementType)))
+        {
+            int sumOfCrystalls = PS.amountOfCrystalls[element] + PS.amountOfCrystallsAdded[element];
+            if(sumOfCrystalls < thisNextLevelNeeded[element]) return;
+        }
+        LevelUp();
+    }
     public abstract void InitializeMaximumNeeded();
-
+    public void InitializeCringe()
+    {
+        thisNextLevelNeeded[ElementType.Fire] = 0;
+        thisNextLevelNeeded[ElementType.Earth] = 0;
+        thisNextLevelNeeded[ElementType.Wind] = 0;
+        thisNextLevelNeeded[ElementType.Water] = 0;
+        thisNextLevelNeeded[ElementType.UmElementary] = 0;
+    }
     public virtual void Start()
     {
         player = PlayerStats.Instance.PM;
+        InitializeCringe();
         int tempPoints = 0;
+        InitializeMaximumNeeded();
         foreach (ElementType element in Enum.GetValues(typeof(ElementType)))
         {
-            tempPoints += maximumNeeded[element];
+            tempPoints += thisMaximumNeeded[element];
         }
-        pointsOnLevel = tempPoints/level;
+        pointsOnLevel = tempPoints/maximumLevel;
+        AddPointsToNeeded();
     }
     void Awake()
     {
@@ -133,10 +154,12 @@ public abstract class Sphere : MonoBehaviour, InfoItem
         damage = (int)(damage* 1.1f);
         else
         damage = (int)(damage* 1.5f);
+        PlayerStats.Instance.CalculateDamage(isPrimary);
         AddPointsToNeeded();
     }
     public void AddPointsToNeeded()
     {
+        Debug.Log("INADDING");
         int remainingPoints = pointsOnLevel;
         List<ElementType> availableElements = new List<ElementType>();
 
@@ -145,10 +168,11 @@ public abstract class Sphere : MonoBehaviour, InfoItem
             availableElements.Clear();
 
             // Определяем элементы, куда можно добавлять очки
-            foreach (var element in maximumNeeded.Keys)
+            foreach (var element in thisMaximumNeeded.Keys)
             {
-                if (nowNeeded[element] < maximumNeeded[element])
+                if (thisNextLevelNeeded[element] < thisMaximumNeeded[element])
                 {
+                    Debug.Log("nextLevel: " + thisNextLevelNeeded[element] + " maximum: " + thisMaximumNeeded[element]);
                     availableElements.Add(element);
                 }
             }
@@ -162,12 +186,13 @@ public abstract class Sphere : MonoBehaviour, InfoItem
             ElementType selectedElement = availableElements[UnityEngine.Random.Range(0, availableElements.Count)];
 
             // Определяем, сколько очков можно добавить (минимум 1, максимум до заполнения)
-            int maxAddable = maximumNeeded[selectedElement] - nowNeeded[selectedElement];
+            int maxAddable = thisMaximumNeeded[selectedElement] - thisNextLevelNeeded[selectedElement];
             int pointsToAdd = UnityEngine.Random.Range(1, Mathf.Min(maxAddable, remainingPoints) + 1);
 
             // Добавляем очки
-            nowNeeded[selectedElement] += pointsToAdd;
+            thisNextLevelNeeded[selectedElement] += pointsToAdd;
             remainingPoints -= pointsToAdd;
+            Debug.Log("needed Fire: " + thisNextLevelNeeded[ElementType.Fire]);
         }
     }
     public abstract void SecondaryEffect(Transform fromWhere);

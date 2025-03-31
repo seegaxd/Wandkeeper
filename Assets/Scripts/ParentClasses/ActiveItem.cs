@@ -60,6 +60,10 @@ public abstract class ActiveItem : MonoBehaviour, InfoItem
             StartCoroutine(CoolDown());
         }
     }
+    public void CheckCrystalls()
+    {
+        Debug.Log("How are you here?");
+    }
 
     private IEnumerator CoolDown()
     {

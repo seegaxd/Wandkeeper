@@ -41,7 +41,10 @@ public abstract class Artefact : MonoBehaviour, InfoItem
     }
     public abstract void ActivateEffect();
     public abstract void DeactivateEffect();
-
+    public void CheckCrystalls()
+    {
+        Debug.Log("How are you here?");
+    }
     void OnDestroy()
     {
         ArtefactsManager.Instance.equipedArtefacts.Remove(this);

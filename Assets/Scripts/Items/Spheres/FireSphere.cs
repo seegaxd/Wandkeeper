@@ -25,6 +25,7 @@ public class FireSphere : Sphere
         thisMaximumNeeded[ElementType.Wind] = 7;
         thisMaximumNeeded[ElementType.Water] = 0;
         thisMaximumNeeded[ElementType.UmElementary] = 3;
+        Debug.Log("ININITIALIZE");
     }
     public override void SecondaryEffect(Transform fromWhere)
     {

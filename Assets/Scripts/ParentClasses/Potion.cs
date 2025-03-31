@@ -41,6 +41,9 @@ public abstract class Potion : MonoBehaviour, InfoItem
     public void TakeOffOnUse()
     {
         GameManager.Instance.TakeOffImage(thisSlot+3);
+    }public void CheckCrystalls()
+    {
+        Debug.Log("How are you here?");
     }
     public void ActivatePotion()
     {

@@ -35,8 +35,8 @@ public abstract class Ability : MonoBehaviour, InfoItem
     [SerializeField] private GameObject thisGameObject;
     [SerializeField] private string thisDescriptionIn;
     [SerializeField] private ElementType thisElementTypeIn;
-    [SerializeField] public Dictionary<ElementType, int> maximumNeeded;
-    [SerializeField] public Dictionary<ElementType, int> nowNeeded;
+    [SerializeField] public Dictionary<ElementType, int> maximumNeeded = new Dictionary<ElementType, int>();
+    [SerializeField] public Dictionary<ElementType, int> nowNeeded = new Dictionary<ElementType, int>();
     [SerializeField] public int maximumLevel;
     public int thisMaximumLevel => maximumLevel;
     public Dictionary<ElementType, int> thisNextLevelNeeded => nowNeeded;
@@ -57,18 +57,29 @@ public abstract class Ability : MonoBehaviour, InfoItem
     public virtual void Start()
     {
         PS = PlayerStats.Instance;
+        InitializeCringe();
         PM = PS.PM;
         GM = GameManager.Instance;
+        InitializeMaximumNeeded();
         int tempPoints = 0;
         foreach (ElementType element in Enum.GetValues(typeof(ElementType)))
         {
             tempPoints += maximumNeeded[element];
         }
-        pointsOnLevel = tempPoints/level;
+        pointsOnLevel = tempPoints/maximumLevel;
+        AddPointsToNeeded();
     }
     void Awake()
     {
         thisImage = GetComponent<SpriteRenderer>().sprite;
+    }
+    public void InitializeCringe()
+    {
+        thisNextLevelNeeded[ElementType.Fire] = 0;
+        thisNextLevelNeeded[ElementType.Earth] = 0;
+        thisNextLevelNeeded[ElementType.Wind] = 0;
+        thisNextLevelNeeded[ElementType.Water] = 0;
+        thisNextLevelNeeded[ElementType.UmElementary] = 0;
     }
     public abstract void ActivateEffect();
     public abstract void InitializeMaximumNeeded();
@@ -92,8 +103,18 @@ public abstract class Ability : MonoBehaviour, InfoItem
         }
         AddPointsToNeeded();
     }
+    public void CheckCrystalls()
+    {
+        foreach (ElementType element in Enum.GetValues(typeof(ElementType)))
+        {
+            int sumOfCrystalls = PS.amountOfCrystalls[element] + PS.amountOfCrystallsAdded[element];
+            if(sumOfCrystalls < thisNextLevelNeeded[element]) return;
+        }
+        LevelUp();
+    }
     public void AddPointsToNeeded()
     {
+        Debug.Log("INADDING");
         int remainingPoints = pointsOnLevel;
         List<ElementType> availableElements = new List<ElementType>();
 
@@ -102,10 +123,11 @@ public abstract class Ability : MonoBehaviour, InfoItem
             availableElements.Clear();
 
             // Определяем элементы, куда можно добавлять очки
-            foreach (var element in maximumNeeded.Keys)
+            foreach (var element in thisMaximumNeeded.Keys)
             {
-                if (nowNeeded[element] < maximumNeeded[element])
+                if (thisNextLevelNeeded[element] < thisMaximumNeeded[element])
                 {
+                    Debug.Log("nextLevel: " + thisNextLevelNeeded[element] + " maximum: " + thisMaximumNeeded[element]);
                     availableElements.Add(element);
                 }
             }
@@ -119,12 +141,13 @@ public abstract class Ability : MonoBehaviour, InfoItem
             ElementType selectedElement = availableElements[UnityEngine.Random.Range(0, availableElements.Count)];
 
             // Определяем, сколько очков можно добавить (минимум 1, максимум до заполнения)
-            int maxAddable = maximumNeeded[selectedElement] - nowNeeded[selectedElement];
+            int maxAddable = thisMaximumNeeded[selectedElement] - thisNextLevelNeeded[selectedElement];
             int pointsToAdd = UnityEngine.Random.Range(1, Mathf.Min(maxAddable, remainingPoints) + 1);
 
             // Добавляем очки
-            nowNeeded[selectedElement] += pointsToAdd;
+            thisNextLevelNeeded[selectedElement] += pointsToAdd;
             remainingPoints -= pointsToAdd;
+            Debug.Log("needed Fire: " + thisNextLevelNeeded[ElementType.Fire]);
         }
     }
     public void ActivateAbility()
