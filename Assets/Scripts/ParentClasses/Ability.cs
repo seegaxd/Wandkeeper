@@ -85,6 +85,7 @@ public abstract class Ability : MonoBehaviour, InfoItem
     public abstract void InitializeMaximumNeeded();
     public virtual void LevelUp()
     {
+        thisLevel++;
         if(level >= 50)
         {
             damage = (int)(damage*2f);
@@ -105,12 +106,15 @@ public abstract class Ability : MonoBehaviour, InfoItem
     }
     public void CheckCrystalls()
     {
-        foreach (ElementType element in Enum.GetValues(typeof(ElementType)))
+        while(true)
         {
-            int sumOfCrystalls = PS.amountOfCrystalls[element] + PS.amountOfCrystallsAdded[element];
-            if(sumOfCrystalls < thisNextLevelNeeded[element]) return;
+            foreach (ElementType element in Enum.GetValues(typeof(ElementType)))
+            {
+                int sumOfCrystalls = PS.amountOfCrystalls[element] + PS.amountOfCrystallsAdded[element];
+                if(sumOfCrystalls < thisNextLevelNeeded[element]) return;
+            }
+            LevelUp();
         }
-        LevelUp();
     }
     public void AddPointsToNeeded()
     {

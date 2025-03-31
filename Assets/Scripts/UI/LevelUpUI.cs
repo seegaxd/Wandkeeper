@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -13,8 +14,10 @@ public class LevelUpUI : MonoBehaviour
     public TextMeshProUGUI[] crystallsYouNeed;
     [Tooltip("0 - fire, 1 - wind, 2 - earth, 3 - water, 4 - unelemental")]
     public TextMeshProUGUI[] crystallsDiffs;
-    [Tooltip("0 - choosedItem, 1 - e, 2 - r, 3- primarySphere, 4 - secondarySphere")]
+    [Tooltip("0 - q, 1 - e, 2 - r, 3- primarySphere, 4 - secondarySphere")]
     public Image[] imagesForActiveButtons;
+    [Tooltip("0 - q, 1 - e, 2 - r, 3 - prSph, 4 - secSph")]
+    public TextMeshProUGUI[] testsLevels;
     public Image choosenImage;
     public Dictionary<ElementType, int> pointsBasedAdded = new Dictionary<ElementType, int>{
         { ElementType.Fire, 0 },
@@ -48,6 +51,7 @@ public class LevelUpUI : MonoBehaviour
     }
     void Start()
     {
+        StartCoroutine(Waiter());
         PM = PlayerMechanic.Instance;
         pointsBasedAdded = PlayerStats.Instance.amountOfCrystalls;
         pointsAdditionalAdded = PlayerStats.Instance.amountOfCrystallsAdded;
@@ -55,6 +59,7 @@ public class LevelUpUI : MonoBehaviour
         UpdateImages();
         //UpdateNeededPoints();
         UpdateYourCrystallsNow();
+        CheckAllItems();
         //UpdateDifference();
     }
     public void UpdateImages()
@@ -62,31 +67,37 @@ public class LevelUpUI : MonoBehaviour
         for(int i = 0; i < imagesForActiveButtons.Length; i++)
         {
             imagesForActiveButtons[i].color = new Color(1,1,1,0);
+            testsLevels[i].gameObject.SetActive(false);
         }
         if(PM.qAbility != null)
         {
             imagesForActiveButtons[0].sprite = PM.qAbility.thisItemImage;
             imagesForActiveButtons[0].color = Color.white;
+            testsLevels[0].gameObject.SetActive(true);
         }
         if(PM.eAbility != null)
         {
             imagesForActiveButtons[1].sprite = PM.eAbility.thisItemImage;
             imagesForActiveButtons[1].color = Color.white;
+            testsLevels[1].gameObject.SetActive(true);
         }
         if(PM.rAbility != null)
         {
             imagesForActiveButtons[2].sprite = PM.rAbility.thisItemImage;
             imagesForActiveButtons[2].color = Color.white;
+            testsLevels[2].gameObject.SetActive(true);
         }
         if(PM.primarySphere != null)
         {
             imagesForActiveButtons[3].sprite = PM.primarySphere.thisItemImage;
             imagesForActiveButtons[3].color = Color.white;
+            testsLevels[3].gameObject.SetActive(true);
         }
         if(PM.secondarySphere != null)
         {
             imagesForActiveButtons[4].sprite = PM.secondarySphere.thisItemImage;
             imagesForActiveButtons[4].color = Color.white;
+            testsLevels[4].gameObject.SetActive(true);
         }
 
     }
@@ -180,11 +191,31 @@ public class LevelUpUI : MonoBehaviour
     }
     public void CheckAllItems()
     {
-        PM.qAbility?.CheckCrystalls();
-        PM.eAbility?.CheckCrystalls();
-        PM.rAbility?.CheckCrystalls();
-        PM.primarySphere?.CheckCrystalls();
-        PM.secondarySphere?.CheckCrystalls();
+        if (PM.qAbility != null)
+    {
+        PM.qAbility.CheckCrystalls();
+        testsLevels[0].text = "Lv. " + PM.qAbility.thisLevel;
+    }
+    if (PM.eAbility != null)
+    {
+        PM.eAbility.CheckCrystalls();
+        testsLevels[1].text = "Lv. " + PM.eAbility.thisLevel;
+    }
+    if (PM.rAbility != null)
+    {
+        PM.rAbility.CheckCrystalls();
+        testsLevels[2].text = "Lv. " + PM.rAbility.thisLevel;
+    }
+    if (PM.primarySphere != null)
+    {
+        PM.primarySphere.CheckCrystalls();
+        testsLevels[3].text = "Lv. " + PM.primarySphere.thisLevel;
+    }
+    if (PM.secondarySphere != null)
+    {
+        PM.secondarySphere.CheckCrystalls();
+        testsLevels[4].text = "Lv. " + PM.secondarySphere.thisLevel;
+    }
     }
     public bool IsEqual(InfoItem item)
     {
@@ -223,5 +254,10 @@ public class LevelUpUI : MonoBehaviour
                 return ElementType.UmElementary;
             default: return ElementType.Fire;
         }
+    }
+    private IEnumerator Waiter()
+    {
+        yield return new WaitForSeconds(0.5f);
+        gameObject.SetActive(false);
     }
 }

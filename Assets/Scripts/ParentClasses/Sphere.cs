@@ -80,12 +80,15 @@ public abstract class Sphere : MonoBehaviour, InfoItem
     public void CheckCrystalls()
     {
         PlayerStats PS = PlayerStats.Instance;
-        foreach (ElementType element in Enum.GetValues(typeof(ElementType)))
+        while(true)
         {
-            int sumOfCrystalls = PS.amountOfCrystalls[element] + PS.amountOfCrystallsAdded[element];
-            if(sumOfCrystalls < thisNextLevelNeeded[element]) return;
+            foreach (ElementType element in Enum.GetValues(typeof(ElementType)))
+            {
+                int sumOfCrystalls = PS.amountOfCrystalls[element] + PS.amountOfCrystallsAdded[element];
+                if(sumOfCrystalls < thisNextLevelNeeded[element]) return;
+            }
+            LevelUp();
         }
-        LevelUp();
     }
     public abstract void InitializeMaximumNeeded();
     public void InitializeCringe()
@@ -145,6 +148,7 @@ public abstract class Sphere : MonoBehaviour, InfoItem
     public abstract void PrimaryAttack();
     public virtual void LevelUp()
     {
+        thisLevel++;
         if(thisLevel >= maximumLevel)
         {
             damage = (int)(damage*2f);

@@ -141,6 +141,7 @@ public class InventoryUI : MonoBehaviour
                 default : break;
         }
         InputAmountOfSlots();
+        LevelUpUI.Instance.UpdateImages();
         obj.SetActive(false);
     }
     public void OnDropButton(InfoItem item, bool isEquiped)
