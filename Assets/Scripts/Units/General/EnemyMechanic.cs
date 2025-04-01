@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EnemyMechanic : MonoBehaviour
 {
+    public float expGiven = 50;
     public float hp;
     public float maxHp;
     public float AttackDistance = 2f;
@@ -16,6 +17,7 @@ public class EnemyMechanic : MonoBehaviour
         if(hp <= 0) 
         {
             EnemyManager.Instance.UnregisterEnemy(transform);
+            PlayerStats.Instance.TakeExp(expGiven);
             Destroy(gameObject);
         }
     }

@@ -5,9 +5,9 @@ using System;
 
 public enum ElementType{
     Fire,
-    Water,
-    Earth,
     Wind,
+    Earth,
+    Water,
     UmElementary
 }
 public interface InfoItem
@@ -163,7 +163,6 @@ public abstract class Sphere : MonoBehaviour, InfoItem
     }
     public void AddPointsToNeeded()
     {
-        Debug.Log("INADDING");
         int remainingPoints = pointsOnLevel;
         List<ElementType> availableElements = new List<ElementType>();
 
@@ -176,7 +175,6 @@ public abstract class Sphere : MonoBehaviour, InfoItem
             {
                 if (thisNextLevelNeeded[element] < thisMaximumNeeded[element])
                 {
-                    Debug.Log("nextLevel: " + thisNextLevelNeeded[element] + " maximum: " + thisMaximumNeeded[element]);
                     availableElements.Add(element);
                 }
             }
@@ -196,7 +194,6 @@ public abstract class Sphere : MonoBehaviour, InfoItem
             // Добавляем очки
             thisNextLevelNeeded[selectedElement] += pointsToAdd;
             remainingPoints -= pointsToAdd;
-            Debug.Log("needed Fire: " + thisNextLevelNeeded[ElementType.Fire]);
         }
     }
     public abstract void SecondaryEffect(Transform fromWhere);

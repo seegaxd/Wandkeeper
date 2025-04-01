@@ -118,7 +118,6 @@ public abstract class Ability : MonoBehaviour, InfoItem
     }
     public void AddPointsToNeeded()
     {
-        Debug.Log("INADDING");
         int remainingPoints = pointsOnLevel;
         List<ElementType> availableElements = new List<ElementType>();
 
@@ -131,7 +130,6 @@ public abstract class Ability : MonoBehaviour, InfoItem
             {
                 if (thisNextLevelNeeded[element] < thisMaximumNeeded[element])
                 {
-                    Debug.Log("nextLevel: " + thisNextLevelNeeded[element] + " maximum: " + thisMaximumNeeded[element]);
                     availableElements.Add(element);
                 }
             }
@@ -151,7 +149,6 @@ public abstract class Ability : MonoBehaviour, InfoItem
             // Добавляем очки
             thisNextLevelNeeded[selectedElement] += pointsToAdd;
             remainingPoints -= pointsToAdd;
-            Debug.Log("needed Fire: " + thisNextLevelNeeded[ElementType.Fire]);
         }
     }
     public void ActivateAbility()

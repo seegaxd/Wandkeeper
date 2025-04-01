@@ -18,6 +18,7 @@ public class LevelUpUI : MonoBehaviour
     public Image[] imagesForActiveButtons;
     [Tooltip("0 - q, 1 - e, 2 - r, 3 - prSph, 4 - secSph")]
     public TextMeshProUGUI[] testsLevels;
+    public TextMeshProUGUI levelText;
     public Image choosenImage;
     public Dictionary<ElementType, int> pointsBasedAdded = new Dictionary<ElementType, int>{
         { ElementType.Fire, 0 },
@@ -37,6 +38,7 @@ public class LevelUpUI : MonoBehaviour
     public int pointsLeft;
     public TextMeshProUGUI avaiblePointsText;
     private PlayerMechanic PM;
+    private PlayerStats PS;
     void Awake()
     {
         if(Instance != null)
@@ -53,6 +55,7 @@ public class LevelUpUI : MonoBehaviour
     {
         StartCoroutine(Waiter());
         PM = PlayerMechanic.Instance;
+        PS = PlayerStats.Instance;
         pointsBasedAdded = PlayerStats.Instance.amountOfCrystalls;
         pointsAdditionalAdded = PlayerStats.Instance.amountOfCrystallsAdded;
         UpdateAvaiblePoints();
@@ -61,6 +64,7 @@ public class LevelUpUI : MonoBehaviour
         UpdateYourCrystallsNow();
         CheckAllItems();
         //UpdateDifference();
+        UpdateExpAndLevel();
     }
     public void UpdateImages()
     {
@@ -126,6 +130,10 @@ public class LevelUpUI : MonoBehaviour
     {
         avaiblePointsText.text = pointsLeft.ToString();
     }
+    public void UpdateExpAndLevel()
+    {
+        levelText.text = $"Level: {PS.level}\nExp:{PS.nowExp}/{PS.needExp}";
+    }
     public void UpdateDifference()
     {
         if(choosenItem != null)
@@ -187,6 +195,7 @@ public class LevelUpUI : MonoBehaviour
             UpdateYourCrystallsNow();
             UpdateDifference();
             UpdateNeededPoints();
+            PlayerStats.Instance.AddClosingFlot(RegonizeElemet(type), 1);
         }
     }
     public void CheckAllItems()

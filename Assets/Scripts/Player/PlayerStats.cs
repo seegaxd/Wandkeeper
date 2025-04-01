@@ -1,9 +1,22 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.Linq;
+using System.Collections;
 
 public class PlayerStats : MonoBehaviour
 {
+    // Closing
+
+    public Dictionary<ElementType, int> allClosingFlot;
+    public Dictionary<ElementType, int> allClosingPercent;
+    ///////////////////////////////////
+    // Grass
+    public int spawnGrassesAmount;
+    public int chanseOfAnotherGrass;
+    public Dictionary<ElementType, int> amountOfGrassesIn;
+    /////////////////////////////////////
+    
     // crystalls
     public Dictionary<ElementType, int> amountOfCrystalls;
     public Dictionary<ElementType, int> amountOfCrystallsAdded;
@@ -41,6 +54,7 @@ public class PlayerStats : MonoBehaviour
     public float projectileSpeed = 5;
     ///////////////////////////////////
     //exp
+    public int level;
     public float needExp;
     public float nowExp;
     public float multyExp;
@@ -95,6 +109,28 @@ public class PlayerStats : MonoBehaviour
             { ElementType.Wind, 0},
             { ElementType.UmElementary, 0},
             };
+            amountOfGrassesIn = new Dictionary<ElementType, int>{
+                {ElementType.Fire, 0},
+                {ElementType.Water, 0},
+                {ElementType.Earth, 0},
+                {ElementType.Wind, 0},
+                {ElementType.UmElementary, 0},
+            };
+            allClosingPercent = new Dictionary<ElementType, int>{
+                {ElementType.Fire, 20},
+                {ElementType.Water, 20},
+                {ElementType.Earth, 20},
+                {ElementType.Wind, 20},
+                {ElementType.UmElementary, 20},
+            };
+            allClosingFlot = new Dictionary<ElementType, int>{
+                {ElementType.Fire, 0},
+                {ElementType.Water,0},
+                {ElementType.Earth,0},
+                {ElementType.Wind, 0},
+                {ElementType.UmElementary, 0},
+            };
+            StartCoroutine(Waiter());
         }
         else
         {
@@ -105,6 +141,43 @@ public class PlayerStats : MonoBehaviour
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Alpha3)) LevelUp();
+    }
+    public void AddClosingFlot(ElementType type, int amount)
+    {
+        if (!allClosingFlot.ContainsKey(type))
+            return;
+
+        allClosingFlot[type] += amount;
+        ReCalculateClosings();
+    }
+    private IEnumerator Waiter()
+    {
+        yield return new WaitForSeconds(0.5f);
+        GameManager.Instance.VisualisationClosings();
+    }
+    public void ReCalculateClosings()
+    {
+        // 1. Считаем общую сумму значений (проценты + флот)
+        int totalValue = allClosingFlot.Sum(kvp => kvp.Value);
+
+        if (totalValue == 100) return; // Если уже 100, ничего не делаем
+
+        // 2. Определяем коэффициент масштабирования
+        double scale = 100.0 / totalValue;
+
+        // 3. Применяем коэффициент, чтобы итоговая сумма стала 100
+        foreach (var key in allClosingPercent.Keys.ToList())
+        {
+            int newValue = (int)Math.Round(allClosingFlot[key] * scale);
+            allClosingPercent[key] = newValue;
+        }
+
+        GameManager.Instance.VisualisationClosings();
+    }
+    public void AddGrasses(ElementType type, int amount = 1)
+    {
+        amountOfGrassesIn[type]+=amount;
+        GameManager.Instance.VisualizateGrasses();
     }
     public void UseKey(int amount = 1)
     {
@@ -155,11 +228,16 @@ public class PlayerStats : MonoBehaviour
                 nowExp+=takenExp;
             }
         }while(takenExp>=needExp);
+        GM.SetExp(nowExp, needExp);
+        LevelUpUI.Instance.UpdateExpAndLevel();
     }
     public void LevelUp()
     {
         needExp*=difficultMultyExp;
+        level++;
         LevelUpUI.Instance.pointsLeft+=2;
+        LevelUpUI.Instance.UpdateAvaiblePoints();
+        LevelUpUI.Instance.UpdateExpAndLevel();
     }
     public void ReCalculateAllTypes()
     {

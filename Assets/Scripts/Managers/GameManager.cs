@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,9 +21,17 @@ public class GameManager : MonoBehaviour
     public GameObject[] menusUI; // 0 - Shop, 1 - UI
     [Tooltip("0 - Ability, 1 - Potion, 2 - ActiveItem")]
     public Sprite[] baseImages;
+    [Tooltip("0 - Fire, 1 - Wind, 2 - Earth, 3 - Water, 4 - UnElementary")]
+    public Image[] grassesImages;
+    public TextMeshProUGUI[] grassesTexts;
     public Sprite[] savedImages = new Sprite[6];
     public Image expBar;
+    private PlayerStats PS;
     /////////////////////////
+    void Start()
+    {
+        PS = PlayerStats.Instance;
+    }
     void Awake()
     {
         if(Instance == null)
@@ -43,12 +52,42 @@ public class GameManager : MonoBehaviour
             menusUI[2].SetActive(!menusUI[2].activeSelf);
         }
     }
+    public void SetExp(float expNow, float maxExp)
+    {
+        expBar.fillAmount = (float)expNow/maxExp;
+    }
+    public void VisualisationClosings()
+    {
+        // Debug.Log("PercentF: " + (float)PS.allClosingPercent[ElementType.Fire]/100 + 
+        // " PercentWi: " + (float)PS.allClosingPercent[ElementType.Wind]/100 +
+        // " PercentE: " + (float)PS.allClosingPercent[ElementType.Earth]/100 +
+        // " PercentWa: " + (float)PS.allClosingPercent[ElementType.Water]/100 +
+        // " PercentU: " + (float)PS.allClosingPercent[ElementType.UmElementary]/100);
+        // Debug.Log("FloatF: " + PS.allClosingFlot[ElementType.Fire] 
+        // + " FloatWi: " + PS.allClosingFlot[ElementType.Wind] +
+        // " FloatE: " + PS.allClosingFlot[ElementType.Earth] +
+        // " FloatWa: " + PS.allClosingFlot[ElementType.Water] +
+        // " FloatU: " + PS.allClosingFlot[ElementType.UmElementary]);
+        grassesImages[0].fillAmount = (float)PS.allClosingPercent[ElementType.Fire]/100;
+        grassesImages[1].fillAmount = (float)PS.allClosingPercent[ElementType.Wind]/100;
+        grassesImages[2].fillAmount = (float)PS.allClosingPercent[ElementType.Earth]/100;
+        grassesImages[3].fillAmount = (float)PS.allClosingPercent[ElementType.Water]/100;
+        grassesImages[4].fillAmount = (float)PS.allClosingPercent[ElementType.UmElementary]/100;
+    }
     public void OnSceneLoaded(Scene oldScene, Scene newScene)
     {
         if(newScene.name == "Game" || newScene.name == "Home")
         {
             StartCoroutine(Waiter());
         }
+    }
+    public void VisualizateGrasses()
+    {
+        grassesTexts[0].text = PS.amountOfGrassesIn[ElementType.Fire].ToString();
+        grassesTexts[1].text = PS.amountOfGrassesIn[ElementType.Wind].ToString();
+        grassesTexts[2].text = PS.amountOfGrassesIn[ElementType.Earth].ToString();
+        grassesTexts[3].text = PS.amountOfGrassesIn[ElementType.Water].ToString();
+        grassesTexts[4].text = PS.amountOfGrassesIn[ElementType.UmElementary].ToString();
     }
     public void TakeOffImage(int id) // 0 - q, 1 - e, 2 - r, 3 - z, 4 - c, 5 - spc
     {
@@ -68,5 +107,6 @@ public class GameManager : MonoBehaviour
                     activeButtons[i].sprite = savedImages[i];
                 }
             }
+            GrassManager.Instance.InitializeGrass(PS.chanseOfAnotherGrass, ElementType.Wind, PS.spawnGrassesAmount);
     }
 }

@@ -120,11 +120,13 @@
     <Compile Include="Assets\Lernen.cs" />
     <Compile Include="Assets\Scripts\Abilities\E\GhostEAbility.cs" />
     <Compile Include="Assets\Scripts\Items\Types\PickUpArtefact.cs" />
+    <Compile Include="Assets\Scripts\Items\Types\PickUpGrasses.cs" />
     <Compile Include="Assets\Scripts\Units\MovementsTypes\SurroundMove.cs" />
     <Compile Include="Assets\Scripts\Items\Potion\BuffPotions\SpeedPotion.cs" />
     <Compile Include="Assets\Scripts\ParentClasses\Portal.cs" />
     <Compile Include="Assets\Scripts\UI\CanvasFinder.cs" />
     <Compile Include="Assets\Scripts\Map\ZoneMap.cs" />
+    <Compile Include="Assets\Scripts\Usefull\GrassPrefab.cs" />
     <Compile Include="Assets\Scripts\UI\HealthUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
@@ -148,6 +150,7 @@
     <Compile Include="Assets\Scripts\Usefull\DesleteOnTime.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
+    <Compile Include="Assets\Scripts\Managers\GrassManager.cs" />
     <Compile Include="Assets\Scripts\Managers\ContentManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\Scripts\Usefull\LoadingScreen.cs" />
