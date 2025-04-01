@@ -2273,6 +2273,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1773c0b234e4258418786c6f4b682fb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyGroups:
+  - cost: 0
+    enemies: []
   allContent:
   - {fileID: 5169903846740857084, guid: eb796f4939bd6bd43a754da9acf4c864, type: 3}
   - {fileID: 9220558241297591393, guid: 49b63a4a19b46e34babac42e3786b9e5, type: 3}

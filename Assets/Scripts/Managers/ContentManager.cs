@@ -34,13 +34,19 @@ public class SavedItem
         IsUnlocked = isUnlocked;
     }
 }
-
+[System.Serializable]
+public class EnemyType
+{
+    public string type;
+    public GameObject prefab;
+    public int poolSize;
+}
 public class SavedData
 {
     public List<SavedItem> Items = new List<SavedItem>();
 }
 [System.Serializable]
-    public class ContentItem
+public class ContentItem
     {
         public int Id;
         public ContentType Type;
@@ -62,6 +68,8 @@ public class SavedData
     }
 public class ContentManager : MonoBehaviour
 {
+    public List<EnemyType> enemyTypes;
+    private Dictionary<float, List<GameObject>> enemyDictionary;
     public static ContentManager Instance { get; private set; }
 
     private Dictionary<ContentType, List<GameObject>> contentByType = new();
@@ -91,7 +99,6 @@ public class ContentManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     public void LoadContent()
     {
         unlockedItems.Items.Clear();

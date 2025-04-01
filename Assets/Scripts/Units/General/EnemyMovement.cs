@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum EnemyType
+public enum EnemyTypeMovement
 {
     General,   // Идет прямо к цели
     Surround   // Кружит вокруг цели
@@ -20,7 +20,7 @@ public class EnemyMovement : MonoBehaviour
 
     private Rigidbody2D rb;
     private Vector2 lastTargetPosition;
-    public EnemyType enemyType;
+    public EnemyTypeMovement enemyType;
     private float orbitAngle;
     public bool isDodgeProjectiles;
 
@@ -45,7 +45,7 @@ public class EnemyMovement : MonoBehaviour
         // Обновляем скорость орбиты на основе движения цели
         UpdateOrbitSpeed();
 
-        if (enemyType == EnemyType.Surround && distance <= orbitRadius)
+        if (enemyType == EnemyTypeMovement.Surround && distance <= orbitRadius)
         {
             OrbitAroundTarget();
             return;
