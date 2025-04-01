@@ -214,23 +214,31 @@ public class PlayerStats : MonoBehaviour
 
     }
     public void TakeExp(float amount)
+{
+    GameManager GM = GameManager.Instance;
+    float takenExp = amount;
+
+    while (takenExp > 0) // Пока есть опыт для распределения
     {
-        GameManager GM = GameManager.Instance;
-        float takenExp = amount;
-        do{
-            if(takenExp>=needExp-nowExp)
-            {
-                takenExp-= (needExp-nowExp);
-                LevelUp();
-            }
-            else
-            {
-                nowExp+=takenExp;
-            }
-        }while(takenExp>=needExp);
-        GM.SetExp(nowExp, needExp);
-        LevelUpUI.Instance.UpdateExpAndLevel();
+        float expToLevelUp = needExp - nowExp; // Сколько нужно до следующего уровня
+
+        if (takenExp >= expToLevelUp)
+        {
+            takenExp -= expToLevelUp; // Убираем использованный опыт
+            nowExp = 0; // Сбрасываем текущий опыт
+            LevelUp(); // Увеличиваем уровень (в нем должно обновляться needExp)
+        }
+        else
+        {
+            nowExp += takenExp;
+            takenExp = 0; // Останавливаем цикл
+        }
     }
+
+    GM.SetExp(nowExp, needExp);
+    LevelUpUI.Instance.UpdateExpAndLevel();
+}
+
     public void LevelUp()
     {
         needExp*=difficultMultyExp;
