@@ -2273,9 +2273,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1773c0b234e4258418786c6f4b682fb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyGroups:
-  - cost: 0
-    enemies: []
+  enemyTypes:
+  - type: Legendary
+    prefab: {fileID: 1219982971321088108, guid: 6cb7938a569533a448d3a2737f4ef017, type: 3}
+    poolSize: 10
+  - type: Epic
+    prefab: {fileID: 1219982971321088108, guid: 6cb7938a569533a448d3a2737f4ef017, type: 3}
+    poolSize: 20
+  - type: UnCommon
+    prefab: {fileID: 1219982971321088108, guid: 6cb7938a569533a448d3a2737f4ef017, type: 3}
+    poolSize: 40
+  - type: Common
+    prefab: {fileID: 1219982971321088108, guid: 6cb7938a569533a448d3a2737f4ef017, type: 3}
+    poolSize: 80
   allContent:
   - {fileID: 5169903846740857084, guid: eb796f4939bd6bd43a754da9acf4c864, type: 3}
   - {fileID: 9220558241297591393, guid: 49b63a4a19b46e34babac42e3786b9e5, type: 3}
@@ -6267,7 +6277,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Version: 0.35'
+  m_text: 'Version: 0.45'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}

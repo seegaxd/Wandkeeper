@@ -10,8 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4866244593625211551}
   - component: {fileID: 846379402469418390}
+  - component: {fileID: 7751296796822950409}
+  - component: {fileID: 1881760514273272710}
   - component: {fileID: 869738614627439470}
   - component: {fileID: 576872155013721000}
+  - component: {fileID: -3271734033274589312}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -46,8 +49,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f2d1baea462682448e15a86f103a9cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  expGiven: 25
   hp: 1000
   maxHp: 1000
+  AttackDistance: 2
+--- !u!114 &7751296796822950409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219982971321088108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34777c85746ed5845bd4efca2efe2a29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCanMove: 1
+  target: {fileID: 0}
+  speed: 2
+  stoppingDistance: 1
+  avoidanceForce: 2
+  separationForce: 1
+  baseOrbitSpeed: 2
+  orbitRotationSpeed: 1.5
+  enemyType: 1
+  isDodgeProjectiles: 0
+--- !u!114 &1881760514273272710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219982971321088108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff837f0c226c82a4a879b6a9b8ed7026, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EGA: {fileID: 11400000, guid: 90bd2bff4a16a7048b75dc63ea768599, type: 2}
+  isCanAttacking: 1
 --- !u!212 &869738614627439470
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -145,3 +186,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
+--- !u!50 &-3271734033274589312
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219982971321088108}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

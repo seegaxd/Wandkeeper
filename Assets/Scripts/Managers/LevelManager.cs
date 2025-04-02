@@ -21,7 +21,11 @@ public class LevelManager : MonoBehaviour
     }
     private IEnumerator EnemyCreator()
     {
-        yield return new WaitForSeconds(zones[InWhatZoneNow].CreateEnemy(PlayerPos, min, max));
+        while(true)
+        {
+            float toWait = zones[InWhatZoneNow].CreateEnemy(PlayerPos, min, max);
+            yield return new WaitForSeconds(toWait);
+        }
     }
     public void StartZoneCreator()
     {

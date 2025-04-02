@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public enum EnemyTypeMovement
@@ -8,6 +9,7 @@ public enum EnemyTypeMovement
 
 public class EnemyMovement : MonoBehaviour
 {
+    public bool isCanMove = true;
     public Transform target;
     public float speed = 2f;
     public float stoppingDistance = 1f;
@@ -35,9 +37,19 @@ public class EnemyMovement : MonoBehaviour
         // Инициализируем начальную позицию игрока
         lastTargetPosition = target.position;
     }
-
+    public void StopMovingForTime(float time)
+    {
+        isCanMove = false;
+        StartCoroutine(WaiterUntillCanMove(time));
+    }
+    private IEnumerator WaiterUntillCanMove(float time)
+    {
+        yield return new WaitForSeconds(time);
+        isCanMove = true;
+    }
     void FixedUpdate()
     {
+        if(!isCanMove)return;
         if (target == null) return;
 
         float distance = Vector2.Distance(transform.position, target.position);

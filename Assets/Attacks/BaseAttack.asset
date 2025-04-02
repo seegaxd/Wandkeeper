@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 138b56ea0a41e604bbc32950dff03c11, type: 3}
+  m_Name: BaseAttack
+  m_EditorClassIdentifier: 
+  AttackPrefab: {fileID: 7466049562453201711, guid: e3d64286fc1b6c9459d2c159689d1644, type: 3}
+  range: 2
+  cdAfterAttack: 3
+  castTime: 1
+  createRange: 2
+  attackAtacking: 1

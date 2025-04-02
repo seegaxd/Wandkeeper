@@ -15,6 +15,8 @@ public class EnemyPoolManager : MonoBehaviour
     {
         enemyTypes = ContentManager.Instance.enemyTypes;
         InitializePools();
+        Debug.Log("сделать при атаке занесение атаки в 'пул', просто выключать его и использовать заново при необходимости");
+        Debug.Log("доделай вычитание из зоны 'очков' врага");
     }
 
     private void InitializePools()
