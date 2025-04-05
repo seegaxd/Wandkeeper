@@ -177,7 +177,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9133635908575858782}
-  - component: {fileID: 1961485381343030548}
+  - component: {fileID: -4510615044928770659}
   m_Layer: 0
   m_Name: LighntningPrefab
   m_TagString: Projectile
@@ -203,7 +203,7 @@ Transform:
   - {fileID: 5863065809412670792}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1961485381343030548
+--- !u!114 &-4510615044928770659
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -212,10 +212,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6331641530127777408}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1b3f41382595fc419f765cbce4d21a5, type: 3}
+  m_Script: {fileID: 11500000, guid: 398876e67aa5442468113187bbb52685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToDelete: 0.5
+  returnTime: 0.5
+  poolName: id1
 --- !u!1 &6702675784140276035
 GameObject:
   m_ObjectHideFlags: 0

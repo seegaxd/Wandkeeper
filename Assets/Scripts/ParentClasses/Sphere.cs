@@ -71,6 +71,7 @@ public abstract class Sphere : MonoBehaviour, InfoItem
     public Rarity thisRarity => rarity;
     public bool isEvolved;
     public int pointsOnLevel;
+    public PlayerPoolManager PLM;
     
     public virtual void Initialize(PlayerMechanic player, bool isPrimary)
     {
@@ -102,6 +103,7 @@ public abstract class Sphere : MonoBehaviour, InfoItem
     public virtual void Start()
     {
         player = PlayerStats.Instance.PM;
+        PLM = PlayerPoolManager.Instance;
         InitializeCringe();
         int tempPoints = 0;
         InitializeMaximumNeeded();

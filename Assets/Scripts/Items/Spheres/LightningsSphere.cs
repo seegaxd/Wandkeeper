@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class LightningsSphere : Sphere
 {
-    public GameObject lightningPrefab;
     public override void Start()
     {
         base.Start();
@@ -11,7 +10,7 @@ public class LightningsSphere : Sphere
     }
     public override void ActiveEffect()
     {
-        //
+        PrimaryAttack();
     }
     public override void InitializeMaximumNeeded()
     {
@@ -28,7 +27,8 @@ public class LightningsSphere : Sphere
 
         if(target != null)
         {
-            Instantiate(lightningPrefab, target.position + new Vector3(0, 0.5f, 0), Quaternion.identity);
+            GameObject lightning = PLM.GetAttack("id1");
+            lightning.transform.position = target.position + new Vector3(0, 0.5f, 0);
             target.GetComponent<EnemyMechanic>().TakeDamage(PlayerStats.Instance.DealingDamage(isPrimary, thisElementType));
             if(player.secondarySphere != null)
             player.secondarySphere.SecondaryEffect(target);
@@ -38,8 +38,8 @@ public class LightningsSphere : Sphere
     public override void SecondaryEffect(Transform fromWhere)
     {
         Transform target = FindNearestEnemy(fromWhere);
-
-        Instantiate(lightningPrefab, target.position + new Vector3(0, 1f, 0), Quaternion.identity);
-        target.GetComponent<EnemyMechanic>().TakeDamage(damage);
+        GameObject lightning = PLM.GetAttack("id1");
+        lightning.transform.position = target.position + new Vector3(0, 0.5f, 0);
+        target.GetComponent<EnemyMechanic>().TakeDamage(PlayerStats.Instance.DealingDamage(isPrimary, thisElementType));
     }
 }

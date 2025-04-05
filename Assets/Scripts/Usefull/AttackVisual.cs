@@ -4,10 +4,13 @@ using System.Collections;
 public class AttackVisual : MonoBehaviour
 {
     public float timeToAttack = 1f; // Время, за которое цвет станет красным
+    public string thisType;
     [SerializeField]private SpriteRenderer spriteRenderer;
     [SerializeField]private BoxCollider2D boxCollider;
+    private EnemyPoolManager EPM;
     private void Awake()
     {
+        EPM = EnemyPoolManager.Instance;
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider = GetComponent<BoxCollider2D>();
     }
@@ -23,21 +26,22 @@ public class AttackVisual : MonoBehaviour
 
     private IEnumerator AttackSequence()
     {
-        // 1. Постепенно меняем цвет на красный
         float elapsedTime = 0f;
+        float step = 0.1f; // шаг 0.1 сек
+        Color startColor = Color.white;
+        Color endColor = Color.red;
+
         while (elapsedTime < timeToAttack)
         {
-            spriteRenderer.color = Color.Lerp(Color.white, Color.red, elapsedTime / timeToAttack);
-            elapsedTime += Time.deltaTime;
-            yield return null;
+            float t = elapsedTime / timeToAttack;
+            spriteRenderer.color = Color.Lerp(startColor, endColor, t);
+            yield return new WaitForSeconds(step);
+            elapsedTime += step;
         }
-        spriteRenderer.color = Color.red; // Гарантируем, что цвет точно станет красным
-
-        // 2. Резко на 0.5 секунды синий
+    
         spriteRenderer.color = Color.blue;
         yield return new WaitForSeconds(0.1f);
 
-        // 3. Проверяем, есть ли игрок внутри коллайдера
         Collider2D[] hits = Physics2D.OverlapBoxAll(transform.position, boxCollider.size, 0);
         foreach (Collider2D hit in hits)
         {
@@ -47,7 +51,7 @@ public class AttackVisual : MonoBehaviour
             }
         }
 
-        // Можно отключить объект после атаки
-        gameObject.SetActive(false);
+        EPM.ReturnAttack(thisType, gameObject);
     }
+
 }

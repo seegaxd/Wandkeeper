@@ -20,21 +20,25 @@ public class ZoneMap : MonoBehaviour
         if(rand < 1)
         {
             EPM.GetEnemy("Legendary", AroundPlayer(player.position, min, max));
+            scoreLeft-=5;
             return 10f;
         }
         if(rand < 5)
         {
             EPM.GetEnemy("Epic", AroundPlayer(player.position, min, max));
+            scoreLeft-=10;
             return 7f;
         }
         if(rand < 40)
         {
             EPM.GetEnemy("UnCommon", AroundPlayer(player.position, min, max));
+            scoreLeft-=5;
             return 1f;
         }
         else
         {
             EPM.GetEnemy("Common", AroundPlayer(player.position, min, max));
+            scoreLeft-=10;
             return 0.5f;
         }
     }

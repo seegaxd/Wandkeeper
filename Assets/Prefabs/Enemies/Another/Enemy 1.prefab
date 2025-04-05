@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 576872155013721000}
   - component: {fileID: -3271734033274589312}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Enemy 1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,9 +49,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f2d1baea462682448e15a86f103a9cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expGiven: 25
-  hp: 1000
-  maxHp: 1000
+  expGiven: 50
+  hp: 2000
+  maxHp: 2000
   AttackDistance: 2
 --- !u!114 &7751296796822950409
 MonoBehaviour:
@@ -89,7 +89,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EGA: {fileID: 11400000, guid: 90bd2bff4a16a7048b75dc63ea768599, type: 2}
   isCanAttacking: 1
-  attackType: id2
+  attackType: id1
 --- !u!212 &869738614627439470
 SpriteRenderer:
   m_ObjectHideFlags: 0

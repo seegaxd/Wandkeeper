@@ -6,12 +6,14 @@ public class BasicTakingAttack : MonoBehaviour
     public EnemyGeneralAttacking EGA;
     private EnemyMovement EM;
     public bool isCanAttacking = true;
-    private AttackVisual AV;
+    public string attackType;
+    private EnemyPoolManager EPM;
 
     void Start()
     {
         EM = GetComponent<EnemyMovement>();
         StartCoroutine(Checker());
+        EPM = EnemyPoolManager.Instance;
     }
 
     private IEnumerator Checker()
@@ -27,18 +29,12 @@ public class BasicTakingAttack : MonoBehaviour
                 Quaternion rotation = Quaternion.LookRotation(Vector3.forward, direction);
 
                 EM.StopMovingForTime(EGA.castTime);
-                if (AV == null)
+                GameObject attackObj = EPM.GetAttack(attackType);
+                attackObj.transform.position = spawnPosition;
+                attackObj.transform.rotation = rotation;
+                foreach(Transform child in attackObj.transform)
                 {
-                    GameObject attackObj = Instantiate(EGA.AttackPrefab, spawnPosition, rotation);
-                    AV = attackObj.GetComponent<AttackVisual>();
-                    AV.InitializeTime(EGA.attackAtacking);
-                }
-                else
-                {
-                    AV.gameObject.SetActive(true);
-                    AV.transform.position = spawnPosition;
-                    AV.transform.rotation = rotation;
-                    AV.StartAttack();
+                    child.GetComponent<AttackVisual>().InitializeTime(EGA.attackAtacking);
                 }
             }
         }

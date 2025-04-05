@@ -9,6 +9,11 @@ public class FireSphereProjectile : MonoBehaviour
     public PlayerMechanic PM;
     public Sphere sph;
     private int bounce;
+    private PlayerPoolManager PLM;
+    void Awake()
+    {
+        PLM = PlayerPoolManager.Instance;
+    }
     public void Initialize(bool pr, PlayerMechanic nPM, Sphere nSPH, Transform nTarget, bool nIsSecondaryAlready)
     {
         isPrimary = pr;
@@ -32,7 +37,7 @@ public class FireSphereProjectile : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            PLM.ReturnAttack("id0", gameObject);
         }
     }
     private void HitTarget()
@@ -57,6 +62,6 @@ public class FireSphereProjectile : MonoBehaviour
                 return;
             }
         }
-        else Destroy(gameObject);
+        else PLM.ReturnAttack("id0", gameObject);
     }
 }

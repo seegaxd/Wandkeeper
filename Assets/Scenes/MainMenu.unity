@@ -2286,6 +2286,23 @@ MonoBehaviour:
   - type: Common
     prefab: {fileID: 1219982971321088108, guid: 6cb7938a569533a448d3a2737f4ef017, type: 3}
     poolSize: 80
+  attacksTypes:
+  - type: id0
+    prefab: {fileID: 6219856004455078988, guid: e3d64286fc1b6c9459d2c159689d1644, type: 3}
+    poolSize: 10
+  - type: id1
+    prefab: {fileID: 6619585642142822213, guid: 3d691982406a4b540a150a51fa67c74c, type: 3}
+    poolSize: 10
+  - type: id2
+    prefab: {fileID: 8987323218699819091, guid: cb860dc80b0d682458d665df885de44e, type: 3}
+    poolSize: 10
+  playerAttackTypes:
+  - type: id0
+    prefab: {fileID: 6450606309962927331, guid: 25538e236aaacc84482f22f2de02550a, type: 3}
+    poolSize: 30
+  - type: id1
+    prefab: {fileID: 6331641530127777408, guid: 5312b3476a328de48b9be54017017b93, type: 3}
+    poolSize: 10
   allContent:
   - {fileID: 5169903846740857084, guid: eb796f4939bd6bd43a754da9acf4c864, type: 3}
   - {fileID: 9220558241297591393, guid: 49b63a4a19b46e34babac42e3786b9e5, type: 3}

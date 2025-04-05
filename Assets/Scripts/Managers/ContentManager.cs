@@ -41,6 +41,13 @@ public class EnemyType
     public GameObject prefab;
     public int poolSize;
 }
+[System.Serializable]
+public class AttackType
+{
+    public string type;
+    public GameObject prefab;
+    public int poolSize;
+}
 public class SavedData
 {
     public List<SavedItem> Items = new List<SavedItem>();
@@ -68,7 +75,10 @@ public class ContentItem
     }
 public class ContentManager : MonoBehaviour
 {
+    
     public List<EnemyType> enemyTypes;
+    public List<AttackType> attacksTypes;
+    public List<AttackType> playerAttackTypes;
     private Dictionary<float, List<GameObject>> enemyDictionary;
     public static ContentManager Instance { get; private set; }
 

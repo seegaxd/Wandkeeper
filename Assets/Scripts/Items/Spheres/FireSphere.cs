@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FireSphere : Sphere
 {
-    public GameObject fireballPrefab;
 
     public override void Start()
     {
@@ -41,9 +40,9 @@ public class FireSphere : Sphere
             if (target != null && !targets.Contains(target))
             {
                 targets.Add(target);
-                Instantiate(fireballPrefab, transform.position, Quaternion.identity)
-                    .GetComponent<FireSphereProjectile>()
-                    .Initialize(false, player, this, target, true);
+                GameObject fireball = PLM.GetAttack("id0");
+                fireball.transform.position = transform.position;
+                fireball.GetComponent<FireSphereProjectile>().Initialize(true, player, this, target, true);
             }
         }
     }
@@ -54,9 +53,9 @@ public class FireSphere : Sphere
 
         foreach (Transform target in nearestEnemies)
         {
-            Instantiate(fireballPrefab, fromWhere.position, Quaternion.identity)
-                .GetComponent<FireSphereProjectile>()
-                .Initialize(true, player, this, target, true);
+            GameObject fireball = PLM.GetAttack("id0");
+            fireball.transform.position = fromWhere.position;
+            fireball.GetComponent<FireSphereProjectile>().Initialize(true, player, this, target, true);
         }
     }
 

@@ -2,8 +2,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New attack logic", menuName = "Logics/Basic Attack")]
 public class EnemyGeneralAttacking : ScriptableObject
 {
-    [Tooltip("Obvius, prefab of attack(with AttackVisual scrypt)")]
-    public GameObject AttackPrefab;
     [Tooltip("Range of attack, that means maximum range from player to start attacking")]
     public float range;
     [Tooltip("After attack someone has cd for restore")]
