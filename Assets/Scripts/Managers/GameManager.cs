@@ -3,7 +3,7 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 using UnityEngine.SceneManagement;
-using System;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,8 +17,8 @@ public class GameManager : MonoBehaviour
     public PortalOut[] portals; // 0 - shop, ...
     [Tooltip("0 - money, 1 - keys, 2 - bombs")]
     public TextMeshProUGUI[] untilities; // 0 - money, 1 - keys, 2 - bombs
-    [Tooltip("0 - Shop")]
-    public GameObject[] menusUI; // 0 - Shop, 1 - UI
+    [Tooltip("0 - Shop, 1 - UI, 2 Inventory, 3 - LoadingScreen?, 4 - buffs/debuffs")]
+    public GameObject[] menusUI; // 0 - Shop, 1 - UI, 2 Inventory, 3 - LoadingScreen?, 4 - buffs/debuffs
     [Tooltip("0 - Ability, 1 - Potion, 2 - ActiveItem")]
     public Sprite[] baseImages;
     [Tooltip("0 - Fire, 1 - Wind, 2 - Earth, 3 - Water, 4 - UnElementary")]
@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI[] grassesTexts;
     public Sprite[] savedImages = new Sprite[6];
     public Image expBar;
+    public GameObject buffIconPrefab;
+    private Dictionary<EffectType, BuffIconUI> activeBuffs = new();
     private PlayerStats PS;
     /////////////////////////
     void Start()
@@ -50,6 +52,26 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             menusUI[2].SetActive(!menusUI[2].activeSelf);
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            BuffManager.Instance.ApplyBuff(ContentManager.Instance.allBuffs[EffectType.SpeedPlus], PlayerMechanic.Instance.gameObject);
+        }
+    }
+    public void AddBuff(BuffData data)
+    {
+        if (activeBuffs.TryGetValue(data.effectType, out var iconUI))
+        {
+            // Бафф уже отображается — обновим его
+            iconUI.UpdateBuff(iconUI.icon.sprite == data.image ? float.Parse(iconUI.strengthText.text) + data.strength : data.strength, data.duration);
+        }
+        else
+        {
+            // Создаём новый UI элемент
+            GameObject obj = Instantiate(buffIconPrefab, menusUI[4].transform);
+            BuffIconUI ui = obj.GetComponent<BuffIconUI>();
+            ui.Setup(data.image, data.strength, data.duration);
+            activeBuffs.Add(data.effectType, ui);
         }
     }
     public void SetExp(float expNow, float maxExp)

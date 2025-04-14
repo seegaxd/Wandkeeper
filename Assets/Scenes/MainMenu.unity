@@ -2273,6 +2273,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1773c0b234e4258418786c6f4b682fb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allInfosBuff:
+  - Type: 0
+    data: {fileID: 11400000, guid: 1f9ef97852f9c5c48bb2ebc42aae9568, type: 2}
+  allRezepts: []
+  unlockedRezepts: []
   enemyTypes:
   - type: Legendary
     prefab: {fileID: 1219982971321088108, guid: 6cb7938a569533a448d3a2737f4ef017, type: 3}

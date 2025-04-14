@@ -16,7 +16,12 @@ public enum Pool
     Angel,
     Devil
 }
-
+[System.Serializable]
+public class BuffInfo
+{
+    public EffectType TypeBuff;
+    public BuffData data;
+}
 public enum ContentType
 {
     Sphere, Artifact, ActiveItem, Potion, SkillQ, SkillE, SkillR
@@ -75,11 +80,14 @@ public class ContentItem
     }
 public class ContentManager : MonoBehaviour
 {
-    
+    public List<BuffInfo> allInfosBuff;
+    public Dictionary<EffectType, BuffData> allBuffs = new();
+    public List<PotionRezept> allRezepts;
+    public List<PotionRezept> unlockedRezepts;
     public List<EnemyType> enemyTypes;
     public List<AttackType> attacksTypes;
     public List<AttackType> playerAttackTypes;
-    private Dictionary<float, List<GameObject>> enemyDictionary;
+    //private Dictionary<float, List<GameObject>> enemyDictionary;
     public static ContentManager Instance { get; private set; }
 
     private Dictionary<ContentType, List<GameObject>> contentByType = new();
@@ -148,6 +156,12 @@ public class ContentManager : MonoBehaviour
             contentByType[item.Type].Add(item.Prefab);
             contentById[item.Id] = item.Prefab;
             contentItemById[item.Id] = item;
+        }
+
+        // BUFFS
+        foreach(BuffInfo item in allInfosBuff)
+        {
+            allBuffs.Add(item.TypeBuff, item.data);
         }
     }
 
