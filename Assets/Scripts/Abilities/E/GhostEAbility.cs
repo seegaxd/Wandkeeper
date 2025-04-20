@@ -11,8 +11,7 @@ public class GhostEAbility : Ability
     }
     public override void ActivateEffect()
     {
-        PS.moveSpeedAdded += 10f;
-        StartCoroutine(EffectDuration());
+        BuffManager.Instance.ApplyBuff(ContentManager.Instance.allBuffs[EffectType.SpeedPlus], PlayerMechanic.Instance.gameObject, 100, duration);
     }
     public override void InitializeMaximumNeeded()
     {
@@ -22,10 +21,5 @@ public class GhostEAbility : Ability
         thisMaximumNeeded[ElementType.Wind] = 25;
         thisMaximumNeeded[ElementType.Water] = 25;
         thisMaximumNeeded[ElementType.UmElementary] = 10;
-    }
-    private IEnumerator EffectDuration()
-    {
-        yield return new WaitForSeconds(duration);
-        PS.moveSpeedAdded -= 10f;
     }
 }

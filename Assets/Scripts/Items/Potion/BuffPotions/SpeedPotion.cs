@@ -5,13 +5,12 @@ public class SpeedPotion : Potion
 {
     public override void ActivateEffect()
     {
-        PlayerStats.Instance.moveSpeedAdded += 10f;
+        BuffManager.Instance.ApplyBuff(ContentManager.Instance.allBuffs[EffectType.SpeedPlus], PlayerMechanic.Instance.gameObject, 50, 10);
         StartCoroutine(Deleter());
     }
     private IEnumerator Deleter()
     {
         yield return new WaitForSeconds(duration);
-        PlayerStats.Instance.moveSpeedAdded -= 10f;
         Destroy(gameObject);
     }
 }

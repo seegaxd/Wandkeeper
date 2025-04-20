@@ -58,20 +58,27 @@ public class GameManager : MonoBehaviour
             BuffManager.Instance.ApplyBuff(ContentManager.Instance.allBuffs[EffectType.SpeedPlus], PlayerMechanic.Instance.gameObject);
         }
     }
-    public void AddBuff(BuffData data)
+    public void AddBuff(BuffData data, float strong = 0, float duration = 0)
     {
         if (activeBuffs.TryGetValue(data.effectType, out var iconUI))
         {
             // Бафф уже отображается — обновим его
-            iconUI.UpdateBuff(iconUI.icon.sprite == data.image ? float.Parse(iconUI.strengthText.text) + data.strength : data.strength, data.duration);
+            iconUI.UpdateBuff(strong, duration);
         }
         else
         {
             // Создаём новый UI элемент
             GameObject obj = Instantiate(buffIconPrefab, menusUI[4].transform);
             BuffIconUI ui = obj.GetComponent<BuffIconUI>();
-            ui.Setup(data.image, data.strength, data.duration);
+            ui.Setup(data.image, strong == 0 ? data.strength : strong, duration == 0 ? data.duration : duration, data.effectType);
             activeBuffs.Add(data.effectType, ui);
+        }
+    }
+    public void DeleteBuff(EffectType data)
+    {
+        if(activeBuffs.ContainsKey(data))
+        {
+            activeBuffs.Remove(data);
         }
     }
     public void SetExp(float expNow, float maxExp)

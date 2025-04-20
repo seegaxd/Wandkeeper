@@ -33,18 +33,16 @@ public abstract class Buff : MonoBehaviour
     protected float strength;
     protected GameObject target;
     protected BuffData data;
-    private Coroutine buffCoroutine;
 
     public void Init(GameObject target, float duration, float strength, Sprite image, BuffData data)
     {
         this.target = target;
 
-        // если уже есть такой бафф, обновим его
         Buff existing = target.GetComponent(this.GetType()) as Buff;
         if (existing != null && existing != this)
         {
             existing.UpdateBuff(duration, strength);
-            Destroy(this); // не нужен новый экземпляр
+            Destroy(this);
             return;
         }
 
@@ -54,27 +52,30 @@ public abstract class Buff : MonoBehaviour
 
         if (target.CompareTag("Player"))
         {
-            GameManager.Instance.AddBuff(data);
+            GameManager.Instance.AddBuff(data, strength, duration);
         }
-
-        buffCoroutine = StartCoroutine(ApplyBuff());
+        OnBuffApplied();
+        StartCoroutine(ApplyBuff());
     }
 
     public void UpdateBuff(float addedDuration, float addedStrength)
     {
-        duration = addedDuration;
-        strength += addedStrength;
-
-        if (buffCoroutine != null)
+        duration += addedDuration;
+    
+        if (addedStrength > strength)
         {
-            StopCoroutine(buffCoroutine);
+            OnBuffRemoved();
+            strength = addedStrength;
+            OnBuffApplied();
         }
-        GameManager.Instance.AddBuff(data);
-
-        buffCoroutine = StartCoroutine(ApplyBuff());
+        
+        GameManager.Instance.AddBuff(data, strength, duration);
+    
+        StartCoroutine(ApplyBuff());
     }
 
     protected abstract IEnumerator ApplyBuff();
     protected abstract EffectType GetEffectType();
-
+    protected virtual void OnBuffApplied() {}
+    protected virtual void OnBuffRemoved() {}
 }

@@ -9,7 +9,7 @@ public class BuffManager : MonoBehaviour
         if(Instance == null) { Instance = this; }
         else { Destroy(gameObject); }
     }
-    public void ApplyBuff(BuffData data, GameObject target)
+    public void ApplyBuff(BuffData data, GameObject target, float strong = 0, float duration = 0)
     {
         Buff effect = null;
         switch (data.effectType)
@@ -23,7 +23,7 @@ public class BuffManager : MonoBehaviour
 
         if (effect != null)
         {
-            effect.Init(target, data.duration, data.strength, data.image, data);
+            effect.Init(target, duration == 0? data.duration : duration, strong == 0 ? data.strength : strong, data.image, data);
         }
     }
 }

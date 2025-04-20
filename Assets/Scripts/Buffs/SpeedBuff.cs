@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpeedBuff : Buff
@@ -7,45 +6,67 @@ public class SpeedBuff : Buff
     private bool isPlayer;
     private PlayerStats playerStats;
     private EnemyMovement enemyMovement;
+    [SerializeField] private float strangthAdded = 0;
+    [SerializeField] private int amountOfCoroutines = 0;
     void Start()
     {
-        Debug.Log("почини здесь прикол с отменой/апдейтом");
+        playerStats = PlayerStats.Instance;
     }
 
     protected override IEnumerator ApplyBuff()
     {
         isPlayer = target.CompareTag("Player");
+        amountOfCoroutines++;
 
+        float timer = 0f;
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        amountOfCoroutines--;
+        if (amountOfCoroutines == 0)
+        {
+            OnBuffRemoved();
+            Destroy(this);
+        }
+    }
+    protected override void OnBuffApplied()
+    {
+        isPlayer = target.CompareTag("Player");
+    
         if (isPlayer)
         {
             playerStats = PlayerStats.Instance;
-            playerStats.moveSpeedAdded += playerStats.moveSpeedNow*(strength/100);
+    
+            // Убираем старую силу, если есть
+            playerStats.moveSpeedAdded -= strangthAdded;
+    
+            // Применяем новую, основанную на текущей силе
+            strangthAdded = playerStats.moveSpeedNow * (strength / 100);
+            playerStats.moveSpeedAdded += strangthAdded;
         }
         else
         {
             enemyMovement = target.GetComponent<EnemyMovement>();
             enemyMovement.speed += strength;
+            strangthAdded = strength;
         }
+    }
 
-        float timer = 0f;
 
-        while (timer < duration)
-        {
-            timer += Time.deltaTime;
-            //Debug.Log("TIme is going, now time: " + timer + ", time needed: " + duration);
-            yield return null;
-        }
-
+    protected override void OnBuffRemoved()
+    {
         if (isPlayer)
         {
-            playerStats.moveSpeedAdded -= playerStats.moveSpeedNow*(strength/100);
+            playerStats.moveSpeedAdded -= strangthAdded;
         }
         else
         {
-            enemyMovement.speed -= playerStats.moveSpeedNow*(strength/100);
+            enemyMovement.speed -= strangthAdded;
         }
-
-        Destroy(this);
+        strangthAdded = 0;
     }
     protected override EffectType GetEffectType() => EffectType.SpeedPlus;
 }
