@@ -2274,8 +2274,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allInfosBuff:
-  - Type: 0
+  - TypeBuff: 0
     data: {fileID: 11400000, guid: 1f9ef97852f9c5c48bb2ebc42aae9568, type: 2}
+  - TypeBuff: 1
+    data: {fileID: 11400000, guid: d028be86dd4b8534490d645094ef5b38, type: 2}
+  - TypeBuff: 15
+    data: {fileID: 11400000, guid: 5f3c701814ac1f143a190b0256e8a408, type: 2}
+  - TypeBuff: 2
+    data: {fileID: 11400000, guid: c18960b9eb3073947b18b3bf34d4d651, type: 2}
+  Elements:
+  - {fileID: 21300000, guid: 7aac1da1808794f4aa5a9ec99f88b751, type: 3}
+  - {fileID: 21300000, guid: aabfaffa58ad0c34583d363e3b885c31, type: 3}
+  - {fileID: 21300000, guid: dfcbfb09b02fc1541850fdc4f13c2b6e, type: 3}
+  - {fileID: 21300000, guid: 454c8ef6c2f16f449b282f716dee335b, type: 3}
+  - {fileID: 21300000, guid: 9ab4d596e4e5d0d43a7752eb0518b055, type: 3}
   allRezepts: []
   unlockedRezepts: []
   enemyTypes:

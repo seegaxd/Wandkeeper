@@ -3228,6 +3228,7 @@ GameObject:
   - component: {fileID: 209547046}
   - component: {fileID: 209547045}
   - component: {fileID: 209547044}
+  - component: {fileID: 209547052}
   m_Layer: 5
   m_Name: UIcanvas
   m_TagString: cameraCanvas
@@ -3379,6 +3380,11 @@ MonoBehaviour:
   - {fileID: 1004524887}
   - {fileID: 1637379250}
   - {fileID: 1333508994}
+  - {fileID: 232838539}
+  GrassesInCraft:
+  - {fileID: 307391905}
+  - {fileID: 1043720161}
+  - {fileID: 474397983}
   activeButtons:
   - {fileID: 100103994}
   - {fileID: 919094782}
@@ -3424,6 +3430,19 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a59f041fb701be248bc4f5476f09374d, type: 3}
   heartPrefab: {fileID: 4795338021449221543, guid: f08ff0c76dab89249b4d7392dbc7a8f9, type: 3}
   placeForHearts: {fileID: 738499930}
+--- !u!114 &209547052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209547043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f34381afc5d39249994d5731e0ce733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manaBar: {fileID: 1486490629}
 --- !u!1 &209841780
 GameObject:
   m_ObjectHideFlags: 0
@@ -4504,14 +4523,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: aabfaffa58ad0c34583d363e3b885c31, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6703,14 +6722,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: aabfaffa58ad0c34583d363e3b885c31, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7737,8 +7756,14 @@ MonoBehaviour:
   AdditionalDamageMulty: 0
   primaryDamage: 0
   secondaryDamage: 0
+  globalCDR_ADDITIONAL: 0
+  abilitiesCDR_ADDITIONAL: 0
   health: 5
   maxHealth: 6
+  mana: 100
+  maxMana: 100
+  manaRegen: 10
+  isCanRegenerate: 1
   shopSlotsAdded: 0
   bounceCount: 0
   projectileSpeed: 3
@@ -15255,14 +15280,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: aabfaffa58ad0c34583d363e3b885c31, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -18729,6 +18754,55 @@ MonoBehaviour:
   scoreLeft: 100
   maxScore: 100
   isInThisZone: 0
+--- !u!1 &1309412839
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1309412840}
+  - component: {fileID: 1309412841}
+  m_Layer: 0
+  m_Name: PotionManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1309412840
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309412839}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.103976674, y: -0.28229782, z: 1896.3374}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1309412841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309412839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e087729bf44c618459820b8a2b308b30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grassesIn: 
+  avaibleRezepts: []
+  isCloseToStations: 0
+  BuffStrong: 20
+  isCanCraft: 1
 --- !u!1 &1316860532
 GameObject:
   m_ObjectHideFlags: 0
@@ -21190,10 +21264,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 0e338f3c7fde31948b0282fd2eb23fc9, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -28623,6 +28697,7 @@ MonoBehaviour:
   - {fileID: 0}
   untilities: []
   menusUI: []
+  GrassesInCraft: []
   baseImages:
   - {fileID: 21300000, guid: f8e05d3e6c81a6540bf4228570cadd95, type: 3}
   - {fileID: 21300000, guid: 85124702cac63b0478384b6600068a9b, type: 3}
@@ -28990,3 +29065,4 @@ SceneRoots:
   - {fileID: 220734577}
   - {fileID: 1414718709}
   - {fileID: 718942021}
+  - {fileID: 1309412840}

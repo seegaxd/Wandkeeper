@@ -7,6 +7,7 @@ public class MenusHolder : MonoBehaviour
 {
     [Tooltip("0- Shop, 1 - AllUI")]
     public GameObject[] menuUIS; // 0 - Shop, 1- AllUI, 2 - menus, 3 - ScreenLoader
+    public Image[] GrassesInCraft;
     [Tooltip("0 - Q, 1 - E, 2 - R, 3 - Z, 4 - X, 5 - spc")]
     public Image[] activeButtons; // 0 - Q, 1 - E, 2 - R, 3 - Z, 4 - X, 5 - spc
     public Image[] activeCDButtons; // 0 - Q, 1 - E, 2 - R, 3 - Z, 4 - X, 5 - spc
@@ -26,6 +27,7 @@ public class MenusHolder : MonoBehaviour
         GM.expBar = expBar;
         GM.grassesImages = grassesImages;
         GM.grassesTexts = grassesTexts;
+        GM.GrassesInCraft = GrassesInCraft;
         StartCoroutine(Waiter());
     }
     private IEnumerator Waiter()
@@ -33,5 +35,6 @@ public class MenusHolder : MonoBehaviour
         menuUIS[3].SetActive(true);
         yield return new WaitForSeconds(0.6f);
         menuUIS[2].SetActive(false);
+        menuUIS[5].SetActive(false);
     }
 }

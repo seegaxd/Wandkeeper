@@ -17,8 +17,9 @@ public class GameManager : MonoBehaviour
     public PortalOut[] portals; // 0 - shop, ...
     [Tooltip("0 - money, 1 - keys, 2 - bombs")]
     public TextMeshProUGUI[] untilities; // 0 - money, 1 - keys, 2 - bombs
-    [Tooltip("0 - Shop, 1 - UI, 2 Inventory, 3 - LoadingScreen?, 4 - buffs/debuffs")]
-    public GameObject[] menusUI; // 0 - Shop, 1 - UI, 2 Inventory, 3 - LoadingScreen?, 4 - buffs/debuffs
+    [Tooltip("0 - Shop, 1 - UI, 2 Inventory, 3 - LoadingScreen?, 4 - buffs/debuffs, 5 - potionCraft")]
+    public GameObject[] menusUI; // 0 - Shop, 1 - UI, 2 Inventory, 3 - LoadingScreen?, 4 - buffs/debuffs, 5 - potionCraft
+    public Image[] GrassesInCraft;
     [Tooltip("0 - Ability, 1 - Potion, 2 - ActiveItem")]
     public Sprite[] baseImages;
     [Tooltip("0 - Fire, 1 - Wind, 2 - Earth, 3 - Water, 4 - UnElementary")]
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
     public GameObject buffIconPrefab;
     private Dictionary<EffectType, BuffIconUI> activeBuffs = new();
     private PlayerStats PS;
+    private Coroutine OpenMenuCoroutine;
     /////////////////////////
     void Start()
     {
@@ -53,10 +55,57 @@ public class GameManager : MonoBehaviour
         {
             menusUI[2].SetActive(!menusUI[2].activeSelf);
         }
-        if (Input.GetKeyDown(KeyCode.O))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            BuffManager.Instance.ApplyBuff(ContentManager.Instance.allBuffs[EffectType.SpeedPlus], PlayerMechanic.Instance.gameObject);
+            if(PS.amountOfGrassesIn[ElementType.Fire] >= 1)
+            {
+                PotionManager.Instance.AddGrass(ElementType.Fire);
+                if(OpenMenuCoroutine!= null) StopCoroutine(OpenMenuCoroutine);
+                OpenMenuCoroutine = StartCoroutine(PotionCraftMenuOpen());
+            }
         }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            if(PS.amountOfGrassesIn[ElementType.Wind] >= 1)
+            {
+                PotionManager.Instance.AddGrass(ElementType.Wind);
+                if(OpenMenuCoroutine!= null) StopCoroutine(OpenMenuCoroutine);
+                OpenMenuCoroutine = StartCoroutine(PotionCraftMenuOpen());
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            if(PS.amountOfGrassesIn[ElementType.Earth] >= 1)
+            {
+                PotionManager.Instance.AddGrass(ElementType.Earth);
+                if(OpenMenuCoroutine!= null) StopCoroutine(OpenMenuCoroutine);
+                OpenMenuCoroutine = StartCoroutine(PotionCraftMenuOpen());
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            if(PS.amountOfGrassesIn[ElementType.Water] >= 1)
+            {
+                PotionManager.Instance.AddGrass(ElementType.Water);
+                if(OpenMenuCoroutine!= null) StopCoroutine(OpenMenuCoroutine);
+                OpenMenuCoroutine = StartCoroutine(PotionCraftMenuOpen());
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            if(PS.amountOfGrassesIn[ElementType.UmElementary] >= 1)
+            {
+                PotionManager.Instance.AddGrass(ElementType.UmElementary);
+                if(OpenMenuCoroutine!= null) StopCoroutine(OpenMenuCoroutine);
+                OpenMenuCoroutine = StartCoroutine(PotionCraftMenuOpen());
+            }
+        }
+    }
+    private IEnumerator PotionCraftMenuOpen()
+    {
+        menusUI[5].SetActive(true);
+        yield return new WaitForSeconds(1f);
+        menusUI[5].SetActive(false);
     }
     public void AddBuff(BuffData data, float strong = 0, float duration = 0)
     {

@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\Covers\MainMenuCover.cs" />
     <Compile Include="Assets\Scripts\Items\PickUpZone.cs" />
     <Compile Include="Assets\Scripts\Items\PickUpItem.cs" />
+    <Compile Include="Assets\Scripts\UI\ManaUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\Scripts\Abilities\E\DashEAbility.cs" />
     <Compile Include="Assets\Scripts\UI\LevelUpUI.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Assets\Scripts\Usefull\InventoryHolderItem.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
     <Compile Include="Assets\Scripts\Managers\BuffManager.cs" />
+    <Compile Include="Assets\Scripts\Buffs\DamageBuff.cs" />
     <Compile Include="Assets\Scripts\Managers\ArtefactsManager.cs" />
     <Compile Include="Assets\Lernen2.cs" />
     <Compile Include="Assets\Scripts\UI\ValuesGameUI.cs" />
@@ -135,6 +137,7 @@
     <Compile Include="Assets\Scripts\Units\Attacking\BasicTakingAttack.cs" />
     <Compile Include="Assets\Scripts\UI\CanvasFinder.cs" />
     <Compile Include="Assets\Scripts\Map\ZoneMap.cs" />
+    <Compile Include="Assets\Scripts\Buffs\CDRBuff.cs" />
     <Compile Include="Assets\Scripts\Usefull\GrassPrefab.cs" />
     <Compile Include="Assets\Scripts\Items\Spheres\General\ReturnOnTime.cs" />
     <Compile Include="Assets\Scripts\UI\HealthUI.cs" />
@@ -147,6 +150,7 @@
     <Compile Include="Assets\Scripts\ParentClasses\Potion.cs" />
     <Compile Include="Assets\Scripts\Items\Types\PickUpPotion.cs" />
     <Compile Include="Assets\Scripts\Portals\PortalMechanicIn.cs" />
+    <Compile Include="Assets\Scripts\Buffs\ManaRegenBuff.cs" />
     <Compile Include="Assets\Scripts\UI\CheatsUI.cs" />
     <Compile Include="Assets\Scripts\Portals\PortalOut.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />

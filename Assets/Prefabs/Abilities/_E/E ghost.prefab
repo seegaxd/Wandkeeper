@@ -126,10 +126,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 560b61b0911befd4da077ac6d09e2851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 1
   duration: 2
   isCanActivating: 1
   CDbase: 5
   CDfinal: 5
+  manaCostBase: 15
+  manaCostFinal: 15
   thisAbilityType: 1
   GM: {fileID: 0}
   PS: {fileID: 0}
@@ -144,3 +147,6 @@ MonoBehaviour:
   thisGameObject: {fileID: 2170295800345535338}
   thisDescriptionIn: make you ghost and gives you a tonn of move speed
   thisElementTypeIn: 0
+  maximumLevel: 0
+  pointsOnLevel: 0
+  isEvolved: 0

@@ -5,27 +5,21 @@ using UnityEngine;
 public enum EffectType
 {
     SpeedPlus,
-    SpeedMinus,
     AllDamagePlus,
-    AllDamageMinus,
+    ManaRegen,
     ElementalDamagePlus,
-    ElementalDamageMinus,
     FireDamagePlus,
-    FireDamageMinus,
     WaterDamagePlus,
-    WaterDamageMinus,
     EarthDamagePlus,
-    EarthDamageMinus,
     WindDamagePlus,
-    WindDamageMinus,
     UnElementaryDamagePlus,
-    UnElementaryDamageMinus,
     Stun,
     Poison,
     Fire,
     Blinding,
     vertigo,
-    moreEXp
+    moreEXp,
+    CDR
 }
 public abstract class Buff : MonoBehaviour
 {

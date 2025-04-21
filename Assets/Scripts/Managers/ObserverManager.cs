@@ -9,7 +9,9 @@ public enum ObserverType
     BombLA,
     StopGameplay,
     TakingDamage,
-    RecoverHealth
+    RecoverHealth,
+    UsingMana,
+    RecoverMana
 }
 
 public interface IObserver

@@ -34,12 +34,20 @@ public class PlayerStats : MonoBehaviour
     public Dictionary<ElementType, float> sumElementMulty = new();
 
     //private float sumElemental;
-
+    // CDR
+    public float globalCDR_ADDITIONAL;
+    public float abilitiesCDR_ADDITIONAL;
+    // #добавить остальные типы кдр
     //////////////////////////////////
 
     // health
     public int health;
     public int maxHealth;
+    // mana
+    public float mana;
+    public float maxMana;
+    public float manaRegen;
+    public bool isCanRegenerate;
     ///////////////////////////////////
 
     // POI stats
@@ -88,6 +96,7 @@ public class PlayerStats : MonoBehaviour
         OM = ObserverManager.Instance;
         ReCalculateAllTypes();
         CalculateSumDamage();
+        StartCoroutine(RegenerationMana());
     }
     void Awake()
     {
@@ -191,7 +200,7 @@ public class PlayerStats : MonoBehaviour
     }
     public void RecoverHealth(int recovering)
     {
-        int healed = 0;
+        int healed;
         health+= recovering;
         if(health>=maxHealth)
         {
@@ -199,7 +208,35 @@ public class PlayerStats : MonoBehaviour
             healed = recovering - overHealing;
             health = maxHealth;
         }
+        else healed = recovering;
         OM.NotifyAll(ObserverType.RecoverHealth, healed);
+    }
+    public void UsingMana(float amount = 1)
+    {
+        mana-=amount;
+        OM.NotifyAll(ObserverType.UsingMana, amount);
+    }
+    private IEnumerator RegenerationMana()
+    {
+        yield return new WaitForSeconds(1f);
+        if(isCanRegenerate) RecoverMana(manaRegen);
+        StartCoroutine(RegenerationMana());
+    }
+    public void RecoverMana(float recovering)
+    {
+        float recovered;
+        mana+= recovering;
+        if(mana>=maxMana)
+        {
+            float overRecovered = mana - maxMana;
+            recovered = recovering - overRecovered;
+            mana = maxMana;
+        }
+        else
+        {
+            recovered = recovering;
+        }
+        OM.NotifyAll(ObserverType.RecoverMana, recovered);
     }
     public void UseBomb(int amount = 1)
     {

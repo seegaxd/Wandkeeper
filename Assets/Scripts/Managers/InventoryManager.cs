@@ -48,9 +48,17 @@ public class InventoryManager : MonoBehaviour
         {
             EquipItem(2, PM.zPotion);
         }
+        else
+        {
+            DeleteItem(PM.zPotion, 2);
+        }
         if(PM.xPotion != null)
         {
             EquipItem(3, PM.xPotion);
+        }
+        else
+        {
+            DeleteItem(PM.xPotion, 3);
         }
         if(PM.AItem != null)
         {
@@ -118,6 +126,22 @@ public class InventoryManager : MonoBehaviour
             itemsSlots[i].InitializeInfoItem(itemsIn[i]);
         }
         InventoryUI.Instance.InputAmountOfSlots();
+    }
+    public void DeleteItem(InfoItem item, int ImageIndex = -1)
+    {
+        if(ImageIndex != -1)
+        {
+            if(item != null)
+            itemsOn.Remove(item);
+            imagesInventory[ImageIndex].sprite = null;
+            Button tempButton = imagesInventory[ImageIndex].GetComponentInParent<Button>();
+            if(tempButton != null)
+            {
+                tempButton.onClick.RemoveAllListeners();
+                LevelUpUI.Instance.UpdateImages();
+                tempButton.interactable = false;
+            }
+        }
     }
     public void InstantiateSlots()
     {

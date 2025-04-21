@@ -126,10 +126,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b9e70ac8d8f6e546853cf1c02f046bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 1
   duration: 1
   isCanActivating: 1
   CDbase: 5
   CDfinal: 5
+  manaCostBase: 10
+  manaCostFinal: 10
   thisAbilityType: 1
   GM: {fileID: 0}
   PS: {fileID: 0}
@@ -144,3 +147,6 @@ MonoBehaviour:
   thisGameObject: {fileID: 6022860728288710803}
   thisDescriptionIn: Just a casual dash in a front of your movement
   thisElementTypeIn: 3
+  maximumLevel: 0
+  pointsOnLevel: 0
+  isEvolved: 0

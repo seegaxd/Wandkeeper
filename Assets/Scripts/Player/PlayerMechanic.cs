@@ -66,6 +66,7 @@ public class PlayerMechanic : MonoBehaviour, IObserver
             {
                 zPotion.ActivatePotion();
                 zPotion = null;
+                InventoryManager.Instance.InitializeInventory();
             }
         }
         if(Input.GetKeyDown(KeyCode.X))
@@ -74,6 +75,7 @@ public class PlayerMechanic : MonoBehaviour, IObserver
             {
                 xPotion.ActivatePotion();
                 xPotion = null;
+                InventoryManager.Instance.InitializeInventory();
             }
         }
         if(Input.GetKeyDown(KeyCode.Space))

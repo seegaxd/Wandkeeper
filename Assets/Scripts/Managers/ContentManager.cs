@@ -81,6 +81,8 @@ public class ContentItem
 public class ContentManager : MonoBehaviour
 {
     public List<BuffInfo> allInfosBuff;
+    [Tooltip("0 - Fire, 1 - Wind, 2 - Earth, 3 - Water, 4 - UmElementary")]
+    public Sprite[] Elements;
     public Dictionary<EffectType, BuffData> allBuffs = new();
     public List<PotionRezept> allRezepts;
     public List<PotionRezept> unlockedRezepts;
@@ -115,6 +117,24 @@ public class ContentManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+    public Sprite ElementGrassSprite(ElementType type)
+    {
+        switch(type)
+        {
+            case ElementType.Fire :
+                return Elements[0];
+            case ElementType.Wind :
+                return Elements[1];
+            case ElementType.Earth :
+                return Elements[2];
+            case ElementType.Water :
+                return Elements[3];
+            case ElementType.UmElementary :
+                return Elements[4];
+            default:
+                return Elements[0];
         }
     }
     public void LoadContent()

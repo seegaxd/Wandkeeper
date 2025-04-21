@@ -17,6 +17,15 @@ public class BuffManager : MonoBehaviour
             case EffectType.SpeedPlus:
                 effect = target.AddComponent<SpeedBuff>();
                 break;
+            case EffectType.AllDamagePlus:
+                effect = target.AddComponent<DamageBuff>();
+                break;
+            case EffectType.CDR:
+                effect = target.AddComponent<CDRBuff>();
+                break;
+            case EffectType.ManaRegen:
+                effect = target.AddComponent<ManaRegenBuff>();
+                break;
             default :
                 break;
         }

@@ -19,6 +19,9 @@ public abstract class Ability : MonoBehaviour, InfoItem
     public bool isCanActivating;
     public float CDbase;
     public float CDfinal;
+    // Mana
+    public float manaCostBase;
+    public float manaCostFinal;
     /////////////////////////////////
     public AbilityType thisAbilityType;
     public GameManager GM;
@@ -153,8 +156,9 @@ public abstract class Ability : MonoBehaviour, InfoItem
     }
     public void ActivateAbility()
     {
-        if(isCanActivating)
+        if(isCanActivating && PS.mana >= manaCostFinal)
         {
+            PS.UsingMana(manaCostFinal);
             ActivateEffect();
             isCanActivating = false;
             StartCoroutine(CoolDown());
@@ -167,18 +171,22 @@ public abstract class Ability : MonoBehaviour, InfoItem
         if (PM.qAbility == this) buttonIndex = 0;
         else if (PM.eAbility == this) buttonIndex = 1;
         else if (PM.rAbility == this) buttonIndex = 2;
-
-        if (buttonIndex != -1)
+        float cdrSum = PS.globalCDR_ADDITIONAL+PS.abilitiesCDR_ADDITIONAL;
+        if(cdrSum < 1)
         {
-            for (int i = 0; i < 20; i++)
+            if (buttonIndex != -1)
             {
+                for (int i = 0; i < 20; i++)
+                {
+                    if(PM.qAbility == this || PM.eAbility == this || PM.rAbility == this) 
+                        GM.activeCDButtons[buttonIndex].fillAmount = i * 0.05f;
+                    yield return new WaitForSeconds((CDfinal-(CDfinal*cdrSum)) / 20);
+                }
                 if(PM.qAbility == this || PM.eAbility == this || PM.rAbility == this) 
-                    GM.activeCDButtons[buttonIndex].fillAmount = i * 0.05f;
-                yield return new WaitForSeconds(CDfinal / 20);
+                    GM.activeCDButtons[buttonIndex].fillAmount = 0f;
             }
-            if(PM.qAbility == this || PM.eAbility == this || PM.rAbility == this) 
-                GM.activeCDButtons[buttonIndex].fillAmount = 0f;
         }
+        
 
         isCanActivating = true;
     }
